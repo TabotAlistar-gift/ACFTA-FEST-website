@@ -1,0 +1,859 @@
+# ACFTA FEST — COMPLETE WEBSITE REDESIGN AND REBUILD
+
+## ROLE
+
+Act as a senior frontend engineer, creative director, UX/UI designer, and digital brand strategist.
+
+Your task is to rebuild the existing ACFTA Fest website into a premium, visually distinctive, culturally rich, responsive website using code.
+
+Existing website: https://acftafest.com/
+
+The current website is built with WordPress. The new website must be implemented in the existing codebase or a clean codebase if one has already been created for this project.
+
+Do not simply recreate the existing WordPress layout. Preserve the organisation's identity, content, event pillars, and important functionality while substantially improving the visual design, user experience, information hierarchy, and responsiveness.
+
+Before making changes, inspect the entire existing project, its routes, components, assets, forms, dependencies, and available integrations. Reuse working functionality where appropriate.
+
+## 1. THE OVERALL VISION
+
+Build a visually impressive, contemporary Pan-African festival website.
+
+The website should communicate:
+- African unity and identity.
+- Trade and entrepreneurship across Africa.
+- African heritage, culture, fashion, music, and art.
+- African sports and the legacy of sporting legends.
+- Youth empowerment, innovation, and opportunity.
+- The excitement of attending a major continental festival.
+
+The website must feel like an actual international African festival brand—not a generic business website, SaaS dashboard, or ordinary event template.
+
+The visual identity should combine traditional African cultural influences with sophisticated contemporary design.
+
+The experience should feel immersive, bold, editorial, cinematic, and premium.
+
+### Primary background colour
+
+FOREST GREEN should be the dominant background colour.
+
+Use a rich, deep forest green as the foundation of the website. Develop a complementary palette around it:
+
+- Deep forest green for the primary background.
+- Darker green for contrast and depth.
+- Warm ivory or cream for readable text and light sections.
+- Restrained gold or ochre accents.
+- Selective terracotta, rust, or earthy red accents.
+- Natural colours drawn from African architecture, textiles, landscapes, and cultural imagery.
+
+Do not make the entire website one flat green colour. Create visual depth through contrasting section backgrounds, imagery, texture, typography, spacing, and lighting.
+
+Maintain a coherent forest-green identity throughout the website.
+
+## 2. WEBSITE STRUCTURE
+
+Build ONE CONTINUOUS LANDING PAGE.
+
+This is a critical requirement.
+
+The main navigation must scroll visitors to sections on the same page using anchor links and smooth scrolling.
+
+Do not turn About, The Event, Partnerships, Registration, or Contact into separate pages for the main browsing experience.
+
+Do not create a collection of disconnected pages or tabs.
+
+The homepage should tell the story of ACFTA Fest from the hero section through to the final footer.
+
+The main navigation should include:
+
+- Home
+- About Us
+- The Event
+- Partnerships & Registration
+- Contact
+- Get a Ticket
+
+The navigation should be visually elegant, responsive, and easy to use.
+
+Use a polished desktop navigation and a properly working mobile menu. The mobile menu should not appear as a large, unstyled list of default blue links.
+
+Keep the navigation accessible and ensure that all anchor links lead to the correct sections.
+
+## 3. SECTION ONE: CINEMATIC HERO
+
+Create an exceptional full-screen or near-full-screen hero section.
+
+This is the first impression of the website and must immediately communicate the scale, identity, and excitement of ACFTA Fest.
+
+### Background imagery
+
+Use a high-quality African cultural or festival photograph as the full background.
+
+Possible imagery includes:
+- A vibrant African cultural celebration.
+- African performers in traditional attire.
+- A sophisticated African fashion runway.
+- A large cultural gathering.
+- A visually striking African festival scene.
+- A carefully composed photograph showing African cultural expression and contemporary creativity.
+
+Use a temporary, high-quality image until the organisation supplies its approved official photograph.
+
+Do not use a plain gradient as a substitute for the main hero photograph.
+
+The photograph should fill the entire hero area. Use appropriate cover positioning and responsive cropping.
+
+Apply a subtle dark forest-green overlay to ensure the text remains readable. The image may be slightly softened or blurred if it improves the composition, but the result must remain visually rich and intentional.
+
+### Hero content
+
+Include:
+- The official ACFTA Fest logo.
+- A small eyebrow label announcing the Gambia 2027 edition, subject to confirmation.
+- A large, expressive headline.
+- A concise description of the festival.
+- A primary “Get a Ticket” call to action.
+- A secondary “Explore the Festival” call to action.
+- A subtle scroll indicator.
+
+Possible headline direction:
+
+“ONE AFRICA.
+ONE MARKET.
+ONE FUTURE.”
+
+Use the official theme, “One Africa, One Market, One Future,” subject to content confirmation.
+
+Supporting copy should communicate that ACFTA Fest brings African entrepreneurs, creatives, athletes, cultural leaders, and partners together through trade, talent, and culture.
+
+The primary CTA should lead to the ticket or registration destination that the organisation actually uses.
+
+The secondary CTA should scroll to the About section.
+
+### Hero animation
+
+Use subtle, high-quality animation:
+- A gentle reveal of the headline.
+- Staggered appearance of supporting text and buttons.
+- A restrained background image movement or parallax effect.
+- A smooth transition into the next section.
+
+Animations must not delay access to the content or reduce mobile performance.
+
+The hero should look professionally art-directed, not like a default AI-generated landing page.
+
+## 4. SECTION TWO: ABOUT ACFTA FEST
+
+Place the About section immediately after the hero.
+
+Give it a clear visual identity that contrasts with the hero while remaining consistent with the forest-green palette.
+
+### Heading
+
+“AFRICA CONNECTED THROUGH TRADE, TALENT & CULTURE”
+
+### Content
+
+Use the existing website's core description as the foundation:
+
+ACFTA Fest is a rotating Pan-African festival designed to unite the continent through trade, talent, culture, entrepreneurship, innovation, and sports.
+
+It brings together African startups, creatives, athletes, business leaders, and institutions to celebrate Africa, build connections, and create opportunities for shared economic growth.
+
+Explain its relationship to:
+- The African Continental Free Trade Area (AfCFTA).
+- Pan-African collaboration.
+- Youth empowerment.
+- Entrepreneurship and innovation.
+- Cultural preservation.
+- Sports diplomacy.
+- Cross-border business opportunities.
+
+Rewrite awkward or repetitive wording into polished, professional English without changing the intended meaning.
+
+Do not invent partnerships, achievements, statistics, or endorsements.
+
+### Visual presentation
+
+Do not place every paragraph inside a small card.
+
+Use a strong editorial layout with:
+- A large section heading.
+- A readable description.
+- An African cultural photograph or artistic visual.
+- A restrained decorative element inspired by African geometry or textiles.
+- Clear visual hierarchy and generous spacing.
+
+The section should feel authentic and sophisticated.
+
+## 5. SECTION THREE: PARTNERS AND COLLABORATORS
+
+Place this section DIRECTLY BELOW the About section.
+
+Create a polished partner-logo showcase.
+
+### Required behaviour
+
+Display partner and sponsor logos in a continuously moving horizontal carousel or marquee.
+
+The logos should move smoothly across the screen and loop seamlessly.
+
+The movement must not jump, flicker, or leave a large empty gap when the animation restarts.
+
+Use CSS animations or an appropriate lightweight carousel library.
+
+Include:
+- Smooth continuous movement.
+- Responsive logo sizing.
+- Consistent visual spacing.
+- Correct logo proportions.
+- Accessible labels for logos.
+- Pause-on-hover where appropriate.
+- Reduced-motion support for visitors who prefer reduced animation.
+
+Do not distort, stretch, or crop the logos.
+
+Use actual partner logos only when available and approved.
+
+If the official logos are not yet available, create clearly replaceable temporary logo placeholders. Do not invent real partnerships.
+
+Keep the background and surrounding layout consistent with the premium forest-green design.
+
+The purpose of this section is to establish credibility and demonstrate the network supporting ACFTA Fest.
+
+## 6. SECTION FOUR: WHAT WE DO — THE THREE PILLARS
+
+Create a visually distinctive section introducing the three main pillars of ACFTA Fest.
+
+Section heading:
+
+“THREE PILLARS. ONE AFRICAN FUTURE.”
+
+Present the pillars as three substantial, visually engaging experiences.
+
+Use large photographs, asymmetrical layouts, elegant typography, and restrained motion.
+
+Do not make them look like three identical generic SaaS feature cards.
+
+### PILLAR ONE: STARTUP FLAMES
+
+Focus: African entrepreneurship, innovation, startups, investment, and trade.
+
+Explain that Startup Flames provides a platform for entrepreneurs to showcase their products, pitch ideas, connect with investors, participate in exhibitions, attend masterclasses, and explore new markets.
+
+Suggested imagery:
+- African founders presenting a business.
+- Startup pitch competitions.
+- Entrepreneurs exhibiting products.
+- Investors and founders networking.
+
+Suggested CTA: “Explore Startup Flames”
+
+### PILLAR TWO: HERITAGE WAVES
+
+Focus: African culture, heritage, fashion, music, art, and storytelling.
+
+Explain that Heritage Waves celebrates Africa's diverse identities through cultural performances, fashion shows, music, visual arts, storytelling, and creative expression.
+
+Suggested imagery:
+- African fashion.
+- Cultural performances.
+- African textiles and crafts.
+- Musicians and artists.
+- Cultural festivals.
+
+Suggested CTA: “Discover Heritage Waves”
+
+### PILLAR THREE: AFRICAN LEGENDS UNITED
+
+Focus: African sports, football legends, mentorship, youth development, and sports diplomacy.
+
+Explain how the pillar celebrates African sporting achievements and uses sports to encourage unity, mentorship, and youth participation.
+
+Suggested imagery:
+- African football.
+- Sporting legends.
+- Young athletes training.
+- Stadium and sporting-event photography.
+
+Suggested CTA: “Discover African Legends United”
+
+Each CTA should scroll to a more detailed explanation or the corresponding programme area further down the same page.
+
+Do not create separate pages for the pillars.
+
+## 7. SECTION FIVE: THE ROTATIONAL MODEL
+
+Create a visually compelling explanation of ACFTA Fest's rotational host-country model.
+
+The current website explains that the festival moves between African host countries, creating opportunities for collaboration and leaving a lasting legacy.
+
+Section heading:
+
+“ONE FESTIVAL. MANY NATIONS.”
+
+Explain the model using three steps:
+
+01 — HOST A NATION
+
+Each edition brings continental attention and opportunities to a host country.
+
+02 — CONNECT PEOPLE AND INDUSTRIES
+
+Entrepreneurs, creatives, athletes, policymakers, investors, and institutions come together.
+
+03 — BUILD A LASTING LEGACY
+
+The festival aims to create business connections, support youth opportunities, celebrate culture, and strengthen networks beyond the event itself.
+
+### Visual design
+
+Avoid a plain three-column text section.
+
+Explore a sophisticated visual treatment featuring:
+- An illustrated map of Africa or an appropriate map-based visual.
+- A rotational journey or connected destinations.
+- A clear visual representation of the three steps.
+- Large editorial typography.
+- Subtle motion that reinforces the idea of movement across countries.
+
+Use verified host-country information only.
+
+The current website identifies The Gambia as the intended 2027 host. Confirm the information before presenting it as final.
+
+Do not invent future host countries.
+
+## 8. SECTION SIX: OUR VISION, MISSION AND RATIONALE
+
+Create a strong editorial section explaining why ACFTA Fest exists.
+
+Use a forest-green background or a darker complementary shade, with carefully chosen imagery and contrasting text.
+
+### Our vision
+
+Use the existing website's stated vision as the basis:
+
+To be a leading African festival that unites cultures, showcases African heritage, and drives trade, innovation, and sports across the continent.
+
+### Our mission
+
+Explain the mission through its core commitments:
+- Creating platforms that empower African startups and entrepreneurs.
+- Celebrating African culture through music, fashion, art, and storytelling.
+- Promoting African sports as a tool for unity, diplomacy, and youth inspiration.
+- Connecting people, industries, and opportunities across borders.
+
+### Why it matters
+
+Explain the rationale behind bringing trade, talent, and culture together.
+
+Show how ACFTA Fest aims to connect policy with real people, build cross-border relationships, create opportunities for African businesses, celebrate cultural identity, and inspire the next generation.
+
+Make this section emotionally compelling but credible.
+
+Use large typography, selective emphasis, and well-composed photographs rather than a wall of text.
+
+## 9. SECTION SEVEN: WHAT WE PROJECT
+
+Create a visually striking section titled:
+
+“WHAT WE PROJECT”
+
+Include a large, relevant photograph as a central part of the layout.
+
+The photograph should be visually prominent, not a tiny thumbnail placed beside a paragraph.
+
+Use a temporary African festival, cultural, entrepreneurial, or community image until official imagery is supplied.
+
+Present the organisation's guiding principles:
+- Unity.
+- Innovation.
+- Inclusion.
+- Excellence.
+- Sustainable impact.
+- Long-term legacy.
+
+Explain that ACFTA Fest aims to create value that extends beyond the festival itself.
+
+The design may use a split layout, with the photograph occupying a substantial part of the screen and the text arranged elegantly beside or over it.
+
+Do not use an unrelated stock photograph simply to fill space.
+
+## 10. SECTION EIGHT: PARTAKE IN ACFTA FEST
+
+Create a high-impact participation section.
+
+Heading:
+
+“BE PART OF AFRICA'S NEXT CHAPTER.”
+
+Explain that ACFTA Fest offers opportunities for entrepreneurs, investors, exhibitors, creatives, athletes, institutions, and members of the public to participate.
+
+Create clear calls to action for:
+- Register for the festival.
+- Buy a ticket.
+- Book an exhibition stand.
+- Become a sponsor.
+- Become a partner.
+- Participate in the programme.
+
+Each CTA must lead to a working, approved destination.
+
+If the existing website has functioning forms, payment integrations, registration processes, or external services, inspect and preserve them where possible.
+
+Do not create buttons that look functional but do nothing.
+
+Do not invent ticket prices, registration deadlines, sponsorship packages, or payment details.
+
+If a destination or integration is not available, clearly identify it for configuration rather than pretending it works.
+
+## 11. SECTION NINE: FEATURED SPEAKERS — 2026 EDITION
+
+Create a dedicated Featured Speakers section with the heading:
+
+“FEATURED SPEAKERS”
+
+Supporting text:
+
+“A distinguished lineup of leaders, visionaries, and changemakers.”
+
+Use the names and professional descriptions already published on the existing website as the initial content source.
+
+The currently listed speakers include:
+
+- Hon. Hannatu Musa Musawa — Minister of Art, Culture, Tourism & the Creative Economy, Nigeria.
+- Dr. Mustapha Abdullahi — Director-General/CEO, Energy Commission of Nigeria.
+- Prof. Madison Ngafeeson — Director, Business Data Analytics, Palm Beach Atlantic University, and President of LEADD Missions International.
+- Obi Asika — Director-General/CEO, National Council of Arts & Culture, Nigeria.
+- Hon. Desmond Elliot — Member, Lagos State House of Assembly.
+- Frankie Powell — Leadership Strategist and Corporate Culture Coach.
+- Fonda Fred Fonda — Chief Financial Officer for Africa, UBA.
+- Mirabelle Ade Anyu — FCCA Finance Leader.
+- Dr. Ikechi Agbugba — Pioneer, Brain Re-Engineering Initiative; Associate Professor, Rivers State University.
+- Dr. Tijjani El-badawy — Water-Energy Security Specialist.
+- Dr. Mechie Nkengla — Founder of Data Products, Nuscienta and African Trade Bridge.
+- Mr. Eyong Enoh — Cameroon and Ajax Amsterdam FC Football Legend; CEO, 4PBaller.
+- Dr. Ifeoma Betty Ezike — Assistant Director, Monetary Policy Department, CBN.
+- Dr. Alara Eric Martial Avom — National Coordinator for PNDCF Cameroon.
+- Arc. Sani Ihtisham Saulawa — President, Nigerian Institute of Architects.
+
+IMPORTANT: These are names and descriptions found on the existing website. Do not imply that their participation in a future edition has been reconfirmed. Verify their current status with the organisation.
+
+### Speaker cards
+
+Display the speakers in a polished, responsive card layout.
+
+Each card must contain:
+1. A portrait photograph.
+2. The speaker's name.
+3. Their professional title or affiliation.
+4. Optional subtle hover interaction.
+
+Use consistent portrait dimensions and professional image cropping.
+
+Avoid excessively rounded cards, generic gradients, or overdecorated borders.
+
+Use temporary replaceable portraits only where approved portraits are unavailable.
+
+Do not fabricate portraits, identities, biographies, or endorsements.
+
+The cards should feel editorial and premium, with the person's name and role clearly readable.
+
+On desktop, use a well-balanced grid. On mobile, stack the cards or use a carefully designed horizontal carousel.
+
+If there are too many cards for one row, let the section continue naturally. Do not shrink the portraits until they become unrecognisable.
+
+## 12. SECTION TEN: GAMBIA 2027 PROGRAMME SNAPSHOT
+
+Create a visually distinctive programme section titled:
+
+“GAMBIA 2027”
+
+Supporting text:
+
+“Three signature experiences. One continental celebration.”
+
+This section must feature the three core experiences prominently:
+
+### STARTUP FLAMES ARENA
+
+Include relevant content about:
+- Startup pitches.
+- Investor matchmaking.
+- Business exhibitions.
+- Masterclasses.
+- Entrepreneurship.
+- Regional trade showcases.
+
+### HERITAGE WAVES DOME
+
+Include relevant content about:
+- African music and live performances.
+- Fashion.
+- Cultural exhibitions.
+- Visual arts.
+- Poetry and storytelling.
+- African creative expression.
+
+### AFRICAN LEGENDS UNITED
+
+Include relevant content about:
+- African football legends.
+- Sporting events.
+- Youth football development.
+- Mentorship.
+- Sports diplomacy.
+- Recognition of sporting achievements.
+
+### Design requirements
+
+Present these as three large, image-led experiences.
+
+Each experience should have:
+- A strong title.
+- A distinctive image.
+- A concise description.
+- A visually clear relationship to the main festival identity.
+
+Use different photographic compositions for each pillar.
+
+The three experiences should feel like different worlds within the same festival.
+
+Avoid simply placing three small, identical boxes on a white background.
+
+Below the three main experiences, include a selection of programme highlights from the existing website where relevant and confirmed, such as:
+- Investor lounges and regional trade showcases.
+- Live startup pitch sessions.
+- Masterclasses on leadership, digital trade, funding, and market expansion.
+- A concert series.
+- Visual art installations.
+- African fashion showcases.
+- Poetry and storytelling.
+- African Legends United sporting activities.
+- Youth training clinics.
+- The Legends Choice Awards.
+- Discussions about financing African football.
+
+Do not present unconfirmed programme items as guaranteed events.
+
+The existing site contains some inconsistencies between the 2026 and 2027 editions. Flag those details for approval before finalising the copy.
+
+## 13. SECTION ELEVEN: CONTACT AND PARTNERSHIP ENQUIRIES
+
+Create a visually attractive contact section towards the bottom of the landing page.
+
+Heading:
+
+“LET'S BUILD AFRICA'S FUTURE TOGETHER.”
+
+Include concise copy inviting people and organisations to contact ACFTA Fest about:
+- General enquiries.
+- Sponsorship.
+- Strategic partnerships.
+- Exhibitions and trade opportunities.
+- Speaker or programme participation.
+- Media and outreach.
+
+Use the official contact information currently published on the website, subject to verification:
+
+Email: info@acftafest.com
+
+Phone: +234 806 344 5195
+
+The website currently publishes an Abuja, Nigeria address. Verify that it remains the correct official address before treating it as final.
+
+### Contact form
+
+If the existing site has a working contact form, preserve or migrate its behaviour.
+
+Otherwise, build a well-designed form with:
+- Full name.
+- Email address.
+- Organisation, if applicable.
+- Enquiry category.
+- Message.
+- Submit button.
+
+Implement proper validation, accessible labels, loading feedback, success states, and useful error messages.
+
+Connect the form to an approved backend, email service, or existing integration.
+
+Do not display a false success message if the message has not actually been submitted.
+
+Do not expose API keys or credentials in client-side code.
+
+## 14. SECTION TWELVE: FOOTER
+
+Create a sophisticated footer that feels like the natural conclusion of the festival experience.
+
+Use a deep forest-green or darker complementary background.
+
+Include:
+- The official ACFTA Fest logo.
+- A short description of the festival.
+- Quick navigation links to sections on the same page.
+- Get a Ticket.
+- Register.
+- Become a Partner.
+- Become a Sponsor.
+- Contact information.
+- Social media links, using verified official URLs.
+- Newsletter subscription, if the existing service can be preserved.
+- Privacy Policy and Terms links, where available.
+- A copyright notice using the correct year.
+
+Add a final statement that reinforces the festival's theme:
+
+“ONE AFRICA. ONE MARKET. ONE FUTURE.”
+
+The footer should be visually rich but not crowded.
+
+## 15. VISUAL DESIGN SYSTEM
+
+The website must use a coherent, professionally implemented design system.
+
+### Typography
+
+Use an elegant display typeface for major headings and a highly readable sans-serif for body text.
+
+A suitable direction would be:
+- A sophisticated serif or distinctive editorial display face for large headings.
+- A clean sans-serif for body copy, navigation, buttons, and supporting text.
+
+Typography should create a sense of cultural significance, confidence, and sophistication.
+
+Avoid using the same font size and weight for every heading.
+
+### Layout
+
+Use:
+- Generous vertical spacing.
+- Strong visual hierarchy.
+- Full-width image sections where appropriate.
+- Editorial split layouts.
+- Asymmetrical compositions.
+- Large, expressive headings.
+- Carefully controlled content widths.
+- Clear transitions between sections.
+- Consistent margins and spacing.
+
+Do not make every section look identical.
+
+Do not put every paragraph, image, and feature into a rounded card.
+
+Do not use excessive pill-shaped elements.
+
+Do not fill the website with unnecessary icons.
+
+Do not create a generic collection of gradient cards.
+
+### African visual identity
+
+Use imagery and visual details that celebrate Africa respectfully and authentically.
+
+Possible design references:
+- African textiles and fabric patterns.
+- Contemporary African fashion.
+- Cultural architecture.
+- Landscapes and natural environments.
+- Art, music, and traditional craftsmanship.
+- Contemporary African cities and creative industries.
+
+Use these elements with restraint and intention.
+
+Avoid turning African identity into a collection of random decorative symbols.
+
+The final result should look like a serious Pan-African cultural and economic festival with an international audience.
+
+## 16. IMAGE STRATEGY
+
+Use high-quality imagery throughout the website.
+
+Prioritise:
+- The official ACFTA Fest logo.
+- Existing approved festival photographs.
+- Official speaker portraits.
+- Official partner logos.
+- African entrepreneurship and trade photography.
+- African fashion, music, arts, and cultural imagery.
+- African sports and football imagery.
+
+First inspect the existing project and available assets.
+
+If the assets folder contains usable official images, reuse them where appropriate.
+
+If approved images are not available, use temporary, replaceable images from reliable image sources.
+
+Keep image URLs and asset references organised so the team can replace them easily when official assets arrive.
+
+Do not use random unrelated images.
+
+Do not use fake logos or imply that a business is an official partner.
+
+Do not stretch images or leave broken image placeholders visible.
+
+Add appropriate alternative text and responsive image sizing.
+
+## 17. MOTION AND INTERACTIONS
+
+Use subtle motion to make the experience feel alive.
+
+Appropriate effects include:
+- Hero text reveal.
+- Section entrance animations.
+- Subtle image transitions.
+- Smooth anchor scrolling.
+- Moving partner logos.
+- Speaker-card hover effects.
+- Gentle background movement.
+- Button interaction feedback.
+
+Keep animations tasteful and performant.
+
+Respect reduced-motion preferences.
+
+Avoid excessive parallax, distracting animations, unnecessary loading screens, and effects that make text difficult to read.
+
+The site must remain usable without animation.
+
+## 18. TECHNICAL REQUIREMENTS
+
+If the existing project uses Next.js, TypeScript, and Tailwind CSS, retain that stack unless there is a clear technical reason to change it.
+
+Use reusable components for:
+- Navigation.
+- Hero.
+- Section headings.
+- Partner carousel.
+- Pillar showcases.
+- Rotational model.
+- Speaker cards.
+- Programme highlights.
+- Contact form.
+- Footer.
+
+Use the existing component library if it is already configured correctly.
+
+Keep the code maintainable, organised, responsive, and production-conscious.
+
+Avoid adding unnecessary dependencies.
+
+Ensure:
+- Responsive layouts for mobile, tablet, and desktop.
+- Accessible semantic HTML.
+- Keyboard-accessible navigation.
+- Correct heading hierarchy.
+- Appropriate image optimisation.
+- Good contrast.
+- Fast initial rendering.
+- No horizontal overflow on mobile.
+- No broken links or missing assets.
+- No console errors.
+- No placeholder buttons that do nothing.
+- No exposed secrets.
+- No accidental loss of existing functionality.
+
+Preserve the official logo rather than recreating it using plain text.
+
+## 19. MOBILE EXPERIENCE
+
+The website must be designed for mobile from the beginning.
+
+Test the experience at approximately:
+- 360px wide.
+- 390px wide.
+- 430px wide.
+- Tablet width.
+- Desktop width.
+
+Pay special attention to:
+- The hero image and headline.
+- The mobile navigation.
+- Speaker portraits.
+- Partner-logo movement.
+- The three festival pillars.
+- The rotational-model visual.
+- Programme layouts.
+- Forms and buttons.
+- Footer columns.
+
+The website must look intentional on a phone—not like a desktop design squeezed into a narrow screen.
+
+No horizontal scrolling caused by oversized text, carousels, or images.
+
+## 20. CONTENT ACCURACY
+
+Use the existing ACFTA Fest website as the primary reference for the organisation's identity and published content.
+
+Do not invent:
+- Confirmed speakers.
+- Confirmed sponsors.
+- Official partners.
+- Ticket prices.
+- Event dates.
+- Venue details.
+- Registration deadlines.
+- Financial figures.
+- Attendance statistics.
+- Achievements.
+
+The existing website includes conflicting references to the 2026 Nigeria edition and the 2027 Gambia edition.
+
+Identify these inconsistencies and list them for the organisation to confirm.
+
+Do not silently decide which conflicting detail is correct.
+
+Keep the content structured so approved copy can be updated easily.
+
+## 21. IMPLEMENTATION WORKFLOW
+
+Work in this order:
+
+1. Inspect the existing codebase, assets, routes, forms, and integrations.
+2. Identify existing functionality that must be preserved.
+3. Review the current website's content and navigation.
+4. Establish the forest-green visual system and typography.
+5. Implement the single-page structure and anchor navigation.
+6. Build the hero and About sections.
+7. Implement the moving partner-logo showcase.
+8. Build the three pillars and rotational-model section.
+9. Build the vision, mission, rationale, and What We Project sections.
+10. Implement the participation section and working calls to action.
+11. Build the speaker cards and Gambia 2027 programme snapshot.
+12. Implement contact, newsletter, and footer functionality where applicable.
+13. Test all layouts on mobile, tablet, and desktop.
+14. Check every link, form, animation, and interactive element.
+15. Fix visual and functional issues before declaring the work complete.
+
+Do not stop after generating a basic first draft.
+
+Do not merely describe what should be built. Implement the website.
+
+## 22. FINAL QUALITY STANDARD
+
+The finished website should look like a premium, contemporary Pan-African festival website.
+
+The hero should make a powerful first impression.
+
+The About section should communicate credibility.
+
+The partner logos should move smoothly.
+
+The three pillars should be visually distinctive.
+
+The rotational model should be easy to understand.
+
+The vision and mission should feel meaningful.
+
+The What We Project section must feature a strong photograph.
+
+The speakers must appear as professional image-led cards.
+
+The Gambia 2027 section must clearly present Startup Flames Arena, Heritage Waves Dome, and African Legends United.
+
+The contact section must make it easy to enquire or collaborate.
+
+The footer must close the experience elegantly.
+
+Most importantly, the entire experience must feel cohesive, culturally grounded, and professionally art-directed.
+
+Build the actual website, not a mockup or a design description.
