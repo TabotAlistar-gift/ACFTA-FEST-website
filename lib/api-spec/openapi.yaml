@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: contact
+    description: Contact enquiries
 paths:
   /healthz:
     get:
@@ -24,6 +26,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /contact-inquiries:
+    post:
+      operationId: createContactInquiry
+      tags: [contact]
+      summary: Submit a contact enquiry
+      description: Stores an enquiry for the ACFTA Fest team to review.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInquiryInput"
+      responses:
+        "201":
+          description: Enquiry received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactInquiryReceipt"
+        "400":
+          description: Invalid enquiry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +60,59 @@ components:
           type: string
       required:
         - status
+    ContactInquiryInput:
+      type: object
+      additionalProperties: false
+      properties:
+        fullName:
+          type: string
+          minLength: 2
+          maxLength: 120
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        organization:
+          type: ["string", "null"]
+          maxLength: 160
+        category:
+          type: string
+          enum:
+            - general
+            - sponsorship
+            - partnership
+            - exhibition
+            - programme
+            - media
+            - ticket-information
+        message:
+          type: string
+          minLength: 10
+          maxLength: 5000
+      required:
+        - fullName
+        - email
+        - category
+        - message
+    ContactInquiryReceipt:
+      type: object
+      properties:
+        id:
+          type: integer
+        receivedAt:
+          type: string
+          format: date-time
+        message:
+          type: string
+      required:
+        - id
+        - receivedAt
+        - message
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
 
