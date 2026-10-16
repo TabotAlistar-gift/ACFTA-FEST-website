@@ -44,6 +44,12 @@ Thumbs.db
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
 
-# Replit
+# Deployment / environment
+.vercel/
+.env
+.env.*
+!.env.example
+
+# Build cache
 .cache/
 .local/
