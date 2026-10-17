@@ -2,6 +2,9 @@ packages:
   - app/*
   - lib/*
 
+allowBuilds:
+  esbuild: true
+
 catalogs:
   default:
     '@tailwindcss/vite': latest
