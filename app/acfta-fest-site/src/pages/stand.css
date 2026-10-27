@@ -1,0 +1,286 @@
+/* ==========================================================================
+   ACFTA FEST — BUY A STAND EXHIBITION SHOWCASE (UNDER 300 LINES)
+   Palette: Deep Forest (#062319 / #123d2d), Ochre (#ECDA62), Clay (#a6533b), White (#ffffff)
+   ========================================================================== */
+
+.st-page-root {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #062319;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  overflow-x: hidden;
+}
+
+.st-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+}
+
+/* ─── Top Navigation Bar with Hamburger Drawer ─── */
+.st-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(6, 35, 25, 0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.st-topbar-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0.95rem clamp(1.25rem, 4vw, 3.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.st-brand-logo {
+  height: 2.3rem;
+  width: auto;
+  object-fit: contain;
+}
+
+.st-hamburger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1.05rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.st-hamburger-btn:hover {
+  background: #ECDA62;
+  border-color: #ECDA62;
+  color: #062319;
+}
+
+.st-menu-drawer {
+  background: #062319;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem clamp(1.25rem, 4vw, 3.5rem) 2rem;
+}
+
+.st-menu-drawer-nav {
+  max-width: 1360px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem 2.25rem;
+}
+
+.st-menu-drawer-nav a {
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.st-menu-drawer-nav a:hover { color: #ECDA62; }
+
+.st-menu-drawer-nav a.st-drawer-cta {
+  padding: 0.65rem 1.35rem;
+  background: #ECDA62;
+  color: #062319;
+  font-weight: 800;
+}
+
+/* ─── Hero Section with Visible Underlay & 3D Booth Mockup ─── */
+.st-hero {
+  position: relative;
+  padding: clamp(7.25rem, 12vw, 10rem) clamp(1.25rem, 4vw, 3.5rem) clamp(4.5rem, 7vw, 6rem);
+  background: #062319;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.st-hero-underlay { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.st-hero-underlay-img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+  opacity: 0.34; filter: contrast(1.06) saturate(1.08);
+}
+.st-hero-underlay-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, rgba(6,35,25,0.92) 0%, rgba(6,35,25,0.72) 55%, rgba(6,35,25,0.92) 100%);
+}
+
+.st-hero-content {
+  position: relative; z-index: 2; max-width: 1320px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center;
+}
+
+.st-hero-eyebrow {
+  display: inline-block; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #ECDA62; margin-bottom: 1rem;
+}
+
+.st-hero-title {
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: clamp(2.6rem, 5.6vw, 4.8rem); font-weight: 800; line-height: 1.03;
+  letter-spacing: -0.03em; color: #ffffff; margin: 0 0 1.35rem;
+}
+.st-title-yellow { color: #ECDA62; }
+
+.st-hero-subtitle {
+  font-size: clamp(0.98rem, 1.3vw, 1.12rem); line-height: 1.72;
+  color: rgba(255, 255, 255, 0.86); margin: 0;
+}
+.st-hero-subtitle strong { color: #ECDA62; font-weight: 700; }
+
+.st-hero-booth-frame {
+  background: #ffffff; border: 2px solid rgba(236, 218, 98, 0.55);
+  box-shadow: 0 28px 65px rgba(0, 0, 0, 0.38); overflow: hidden;
+}
+.st-hero-booth-img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.st-hero-booth-caption {
+  padding: 1rem 1.25rem; background: #0f3526; border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.st-caption-code {
+  display: block; font-size: 0.64rem; font-weight: 800; letter-spacing: 0.2em; color: #ECDA62; margin-bottom: 0.2rem;
+}
+.st-hero-booth-caption strong { font-size: 0.84rem; color: #ffffff; display: block; line-height: 1.4; }
+
+/* ─── Alternating Stand Showcase Bands ─── */
+.st-stand-band { padding: clamp(4.25rem, 7vw, 6.75rem) 0; scroll-margin-top: 4.5rem; }
+.st-stand-band.theme-white { background: #ffffff; color: #062319; border-bottom: 1px solid rgba(6, 35, 25, 0.08); }
+.st-stand-band.theme-clay { background: #a6533b; color: #ffffff; }
+.st-stand-band.theme-forest { background: #123d2d; color: #ffffff; }
+
+.st-editorial-row {
+  display: grid; grid-template-columns: 1.08fr 0.92fr; gap: clamp(2.25rem, 5vw, 4.75rem); align-items: center;
+}
+.st-editorial-row.is-reversed .st-media-col { order: 2; }
+.st-editorial-row.is-reversed .st-copy-col { order: 1; }
+
+.st-mockup-stage {
+  position: relative; background: #ffffff; border: 1px solid rgba(6, 35, 25, 0.14);
+  box-shadow: 0 24px 55px rgba(6, 35, 25, 0.16); overflow: hidden;
+}
+.st-mockup-main-img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.st-mockup-top-tags {
+  position: absolute; top: 1rem; left: 1rem; right: 1rem;
+  display: flex; justify-content: space-between; gap: 0.5rem; pointer-events: none;
+}
+.st-code-badge, .st-dim-badge {
+  padding: 0.42rem 0.85rem; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.st-code-badge { background: #062319; color: #ECDA62; }
+.st-dim-badge { background: rgba(255, 255, 255, 0.94); color: #062319; border: 1px solid rgba(6, 35, 25, 0.15); }
+
+.st-copy-kicker { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.st-kicker-code {
+  font-family: var(--font-display, 'Syne', sans-serif); font-size: 1.55rem; font-weight: 800; color: #a6533b;
+}
+.theme-clay .st-kicker-code, .theme-forest .st-kicker-code { color: #ECDA62; }
+.st-kicker-tier {
+  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.78;
+}
+
+.st-stand-title {
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem); font-weight: 800; line-height: 1.14; margin: 0 0 0.45rem;
+}
+.st-stand-subtitle { font-size: 0.94rem; font-weight: 700; opacity: 0.88; margin: 0 0 0.9rem; }
+.st-location-row {
+  display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.4rem 0.75rem;
+  background: rgba(6, 35, 25, 0.06); font-size: 0.76rem; font-weight: 700; margin-bottom: 1rem;
+}
+.theme-clay .st-location-row, .theme-forest .st-location-row { background: rgba(255, 255, 255, 0.12); }
+
+.st-stand-desc { font-size: 0.95rem; line-height: 1.68; opacity: 0.9; margin: 0 0 1rem; }
+.st-visibility-box {
+  padding: 0.85rem 1rem; border-left: 3px solid #ECDA62;
+  background: rgba(6, 35, 25, 0.04); margin-bottom: 1.2rem;
+}
+.theme-clay .st-visibility-box, .theme-forest .st-visibility-box { background: rgba(0, 0, 0, 0.18); }
+.st-vis-label {
+  display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.25rem;
+}
+.st-vis-text { font-size: 0.85rem; line-height: 1.55; margin: 0; opacity: 0.92; }
+
+.st-inc-heading { font-size: 0.74rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 0.65rem; }
+.st-inc-list { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.st-inc-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.88rem; font-weight: 600; line-height: 1.45; }
+.st-inc-check {
+  width: 1.2rem; height: 1.2rem; display: inline-flex; align-items: center; justify-content: center;
+  background: #ECDA62; color: #062319; flex-shrink: 0; margin-top: 0.1rem;
+}
+
+.st-buy-row {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 1rem; padding-top: 1.15rem; border-top: 1px solid rgba(6, 35, 25, 0.12);
+}
+.theme-clay .st-buy-row, .theme-forest .st-buy-row { border-top-color: rgba(255, 255, 255, 0.2); }
+.st-price-label { display: block; font-size: 0.66rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; }
+.st-price-amount { font-family: var(--font-display, 'Syne', sans-serif); font-size: 1.85rem; font-weight: 800; }
+.st-price-amount small { font-size: 0.85rem; font-weight: 700; opacity: 0.8; }
+
+.st-buy-btn {
+  display: inline-flex; align-items: center; gap: 0.65rem; padding: 0.95rem 1.65rem;
+  background: #062319; color: #ffffff; border: 1px solid #062319;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: all 0.22s ease;
+}
+.theme-clay .st-buy-btn, .theme-forest .st-buy-btn { background: #ECDA62; color: #062319; border-color: #ECDA62; }
+.st-buy-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.22); }
+
+/* ─── Shipping, Custom Orders & Banjul Callout ─── */
+.st-info-section { padding: clamp(4rem, 7vw, 6rem) 0; background: #f8f6f1; border-top: 1px solid rgba(6,35,25,0.08); }
+.st-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 3rem; }
+.st-info-col { padding: 2.25rem; background: #ffffff; border: 1px solid rgba(6,35,25,0.1); }
+.st-info-kicker { display: block; font-size: 0.66rem; font-weight: 800; letter-spacing: 0.2em; color: #a6533b; margin-bottom: 0.45rem; }
+.st-info-title { font-family: var(--font-display, 'Syne', sans-serif); font-size: 1.65rem; font-weight: 800; margin: 0 0 1.25rem; }
+.st-info-item { display: flex; gap: 0.95rem; margin-bottom: 1.15rem; }
+.st-info-icon { width: 2.4rem; height: 2.4rem; background: #062319; color: #ECDA62; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.st-info-item h3 { font-size: 0.92rem; font-weight: 800; margin: 0 0 0.25rem; }
+.st-info-item p, .st-info-lead { font-size: 0.88rem; line-height: 1.6; margin: 0 0 1rem; color: rgba(6,35,25,0.82); }
+.st-contact-links { display: grid; gap: 0.75rem; }
+.st-contact-card {
+  display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 1rem;
+  background: #062319; color: #ffffff; text-decoration: none; transition: all 0.2s ease;
+}
+.st-contact-card:hover { background: #123d2d; transform: translateX(4px); }
+.st-contact-card span { display: block; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: #ECDA62; }
+.st-contact-card strong { font-size: 0.92rem; }
+
+.st-banjul-banner {
+  padding: clamp(2rem, 4vw, 3rem); background: #062319; color: #ffffff;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;
+}
+.st-banjul-tag { display: block; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.2em; color: #ECDA62; margin-bottom: 0.4rem; }
+.st-banjul-copy h2 { font-family: var(--font-display, 'Syne', sans-serif); font-size: 1.85rem; margin: 0 0 0.5rem; }
+.st-banjul-copy p { max-width: 640px; font-size: 0.92rem; line-height: 1.6; color: rgba(255,255,255,0.84); margin: 0; }
+.st-banjul-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem; padding: 1rem 1.75rem;
+  background: #ECDA62; color: #062319; text-decoration: none; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+}
+
+.st-footer-min { background: #062319; color: rgba(255,255,255,0.72); padding: 2.25rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
+.st-footer-inner { max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+.st-footer-brand img { height: 2rem; }
+.st-footer-copy { font-size: 0.82rem; margin: 0; }
+.st-footer-copy a { color: #ECDA62; text-decoration: none; font-weight: 700; }
+
+@media (max-width: 980px) {
+  .st-hero-content, .st-editorial-row, .st-info-grid { grid-template-columns: 1fr; }
+  .st-editorial-row.is-reversed .st-media-col, .st-editorial-row.is-reversed .st-copy-col { order: unset; }
+}
+@media (max-width: 560px) {
+  .st-buy-row { flex-direction: column; align-items: stretch; }
+  .st-buy-btn { justify-content: center; width: 100%; }
+}

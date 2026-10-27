@@ -1,0 +1,150 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+}
+
+.register-page-shell, .partnership-page-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.register-header, .partnership-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.brand-link img {
+    height: 50px;
+}
+
+.register-header-nav, .partnership-header-nav {
+    display: flex;
+    gap: 15px;
+}
+
+.primary-button, .secondary-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.primary-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.secondary-button {
+    background-color: #6c757d;
+    color: white;
+}
+
+.category-grid, .field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.category-card, .field {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    transition: box-shadow 0.3s;
+}
+
+.category-card:hover, .field:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-step {
+    margin-bottom: 20px;
+}
+
+.step-heading {
+    margin-bottom: 10px;
+}
+
+.review-box {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.review-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.review-caption {
+    font-weight: bold;
+}
+
+.success-card {
+    background: #e7f9e7;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.success-badge {
+    display: inline-block;
+    background: #28a745;
+    border-radius: 50%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.success-summary {
+    margin: 20px 0;
+}
+
+.success-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-hero, .partnership-hero {
+    position: relative;
+    color: white;
+    padding: 50px 20px;
+    background: url('/images/hero-background.jpg') no-repeat center center/cover;
+}
+
+.register-hero-overlay, .partnership-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.register-hero-content, .partnership-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.field-full {
+    grid-column: span 2;
+}

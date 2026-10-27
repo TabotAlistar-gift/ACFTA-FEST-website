@@ -4,7 +4,10 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import LandingPage from '@/pages/LandingPage';
+import PartnershipPage from '@/pages/PartnershipPage';
 import RegisterPage from '@/pages/RegisterPage';
+import TicketPage from '@/pages/TicketPage';
+import BuyStandPage from '@/pages/BuyStandPage';
 import NotFound from '@/pages/not-found';
 import {
   Route,
@@ -23,6 +26,9 @@ function Router() {
       <Switch>
         <Route path="/" component={LandingPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/partnership" component={PartnershipPage} />
+        <Route path="/tickets" component={TicketPage} />
+        <Route path="/buy-a-stand" component={BuyStandPage} />
         <Route path="/not-found" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

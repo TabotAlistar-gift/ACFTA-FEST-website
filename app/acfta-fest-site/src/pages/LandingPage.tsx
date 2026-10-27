@@ -1,16 +1,22 @@
 import './landing.css';
 import { useEffect, useState } from 'react';
+import { Link } from 'wouter';
 import {
-  ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Check, Menu, X,
+  ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Menu, X,
 } from 'lucide-react';
-import { ContactForm } from '@/components/ContactForm';
-import { pillars, programmeSnapshots, speakers } from '@/data/festival';
+import { pillars } from '@/data/festival';
+import {
+  ContactSection,
+  Footer,
+  ProgrammeSection,
+  SpeakersSection,
+} from '@/components/landing/LandingBottomSections';
 
-const ticketUrl = '/not-found';
+const ticketUrl = '/tickets';
 const registrationUrl = '/register';
-const standUrl = '/not-found';
+const standUrl = '/buy-a-stand';
 const sponsorUrl = '/not-found';
-const partnerUrl = '/not-found';
+const partnerUrl = '/partnership';
 
 const navItems = [
   ['Home', '#home'],
@@ -31,7 +37,6 @@ function Wordmark({ footer = false }: { footer?: boolean }) {
     </a>
   );
 }
-
 function Navigation() {
   const [open, setOpen] = useState(false);
   return (
@@ -126,15 +131,21 @@ function AboutSection() {
 }
 
 function PartnerMarquee() {
-  const partners = ['AFRICA PARTNERS', 'ACFTA', 'AFRICA TRADE', 'AFRICA GROWTH', 'AFRICAN LEGENDS', 'PAN-AFRICAN'];
+  const partners = [
+    { name: 'PCNSLP', logo: '/images/partners/pcnslp.svg' },
+    { name: 'D Farm Ventures', logo: '/images/partners/d-farm-ventures.svg' },
+    { name: 'Crowngrid Engineering', logo: '/images/partners/crowngrid-engineering.svg' },
+    { name: 'FIFPRO Africa', logo: '/images/partners/fifpro-africa.svg' },
+    { name: 'MINADER', logo: '/images/partners/minader.svg' },
+    { name: 'Energy Commission of Nigeria', logo: '/images/partners/energy-commission-nigeria.svg' },
+  ];
   return (
     <section className="partners" aria-label="Partner logo showcase" data-testid="section-provisional-partners">
       <div className="marquee" aria-label="Moving strip of partner logos or marks">
         <div className="marquee-track">
-          {[...partners, ...partners].map((label, index) => (
-            <div className="logo-slot" key={`${label}-${index}`} aria-label={`Partner ${label}`}>
-              <span className="slot-mark" aria-hidden="true">✦</span>
-              <span>{label}<small>PARTNER</small></span>
+          {[...partners, ...partners].map((partner, index) => (
+            <div className="logo-slot" key={`${partner.name}-${index}`} aria-label={`Partner ${partner.name}`}>
+              <img src={partner.logo} alt={partner.name} className="partner-logo-img" />
             </div>
           ))}
         </div>
@@ -227,11 +238,11 @@ function ProjectionSection() {
 
 function ParticipateSection() {
   const links = [
-    { label: 'Register for the festival', detail: 'Join the community', href: registrationUrl, icon: 'external' },
-    { label: 'Get ticket information', detail: 'Visit the official ticket page', href: ticketUrl, icon: 'external' },
-    { label: 'Book an exhibition stand', detail: 'Bring your work to the floor', href: standUrl, icon: 'external' },
-    { label: 'Become a sponsor', detail: 'Explore sponsorship enquiries', href: sponsorUrl, icon: 'external' },
-    { label: 'Become a partner', detail: 'Explore partnership enquiries', href: partnerUrl, icon: 'external' },
+    { label: 'Register for the festival', detail: 'Join the community', href: registrationUrl, internal: true },
+    { label: 'Get ticket information', detail: 'Visit the official ticket page', href: ticketUrl, internal: true },
+    { label: 'Book an exhibition stand', detail: 'Bring your work to the floor', href: standUrl, internal: true },
+    { label: 'Become a sponsor', detail: 'Explore sponsorship enquiries', href: sponsorUrl, internal: true },
+    { label: 'Become a partner', detail: 'Explore partnership enquiries', href: partnerUrl, internal: true },
     { label: 'Join the programme', detail: 'Ask about programme participation', href: '#contact', category: 'programme' },
   ];
   return (
@@ -247,6 +258,10 @@ function ParticipateSection() {
           <a key={link.label} href={link.href} className="participation-link" onClick={() => requestCategory(link.category!)} data-testid={`link-participate-${index}`}>
             <span className="participation-text"><strong>{link.label}</strong><small>{link.detail}</small></span><ArrowUpRight size={18} />
           </a>
+        ) : link.internal ? (
+          <Link key={link.label} href={link.href} className="participation-link" data-testid={`link-participate-${index}`}>
+            <span className="participation-text"><strong>{link.label}</strong><small>{link.detail}</small></span><ArrowUpRight size={18} />
+          </Link>
         ) : (
           <a key={link.label} href={link.href} className="participation-link" data-testid={`link-participate-${index}`}>
             <span className="participation-text"><strong>{link.label}</strong><small>{link.detail}</small></span><ArrowUpRight size={18} />
@@ -255,121 +270,6 @@ function ParticipateSection() {
         <p className="destination-note">Links lead to currently published official ACFTA Fest destinations. No ticket prices, deadlines or package details are stated here.</p>
       </div>
     </section>
-  );
-}
-
-function SpeakersSection() {
-  return (
-    <section className="speakers-section" id="speakers" aria-labelledby="speakers-title">
-      <div className="speakers-heading">
-        <div><SectionLabel>People & ideas</SectionLabel><h2 className="display-heading" id="speakers-title">FEATURED<br /><em>SPEAKERS.</em></h2></div>
-        <div className="speakers-context"><p>A distinguished lineup of leaders, visionaries and changemakers.</p><span>Published for the 2026 edition; participation has not been reconfirmed for a future edition.</span></div>
-      </div>
-      <div className="speakers-grid">
-        {speakers.map((speaker, index) => (
-          <article className="speaker-card" key={speaker.name} data-testid={`card-speaker-${index}`}>
-            <div className="speaker-portrait">
-              {speaker.image ? <img src={`/images/speakers/${speaker.image}`} alt={`Portrait of ${speaker.name}`} loading="lazy" /> : <div className="portrait-pending" aria-label={`Portrait pending for ${speaker.name}`}><span>{speaker.name.split(' ').filter(Boolean).slice(0, 2).map((part) => part[0]).join('')}</span><small>PORTRAIT<br />PENDING</small></div>}
-              <span className="speaker-index">2026 / {String(index + 1).padStart(2, '0')}</span>
-            </div>
-            <h3>{speaker.name}</h3><p>{speaker.role}</p>
-          </article>
-        ))}
-      </div>
-      <p className="speaker-footnote">Names and roles are reproduced as published on the current ACFTA Fest website. Please confirm current titles and participation before publishing future-edition materials.</p>
-    </section>
-  );
-}
-
-function ProgrammeSection() {
-  const [openGroup, setOpenGroup] = useState('Startup Flames Arena');
-
-  return (
-    <section className="programme-section" id="programme" aria-labelledby="programme-title">
-      <div className="programme-heading">
-        <div><SectionLabel light>Programme snapshot</SectionLabel><h2 className="display-heading light-heading" id="programme-title">GAMBIA<br /><em>2027.</em></h2></div>
-        <div className="programme-context"><span className="provisional-stamp">PROVISIONAL / SUBJECT TO CONFIRMATION</span><p>Three signature experiences. One continental celebration.</p><p className="programme-small">The current site positions Gambia as the host for 2027; all programme elements remain provisional until confirmed.</p></div>
-      </div>
-
-      <div className="programme-accordion" aria-label="Programme snapshot accordion">
-        {programmeSnapshots.map((snapshot) => {
-          const isOpen = openGroup === snapshot.title;
-          return (
-            <div className={`programme-accordion-item programme-${snapshot.tone} ${isOpen ? 'is-open' : ''}`} key={snapshot.title}>
-              <button
-                type="button"
-                className="programme-accordion-trigger"
-                aria-expanded={isOpen}
-                onClick={() => setOpenGroup(isOpen ? '' : snapshot.title)}
-              >
-                <span>{snapshot.title}</span>
-                <span className="programme-accordion-toggle" aria-hidden="true">{isOpen ? '−' : '+'}</span>
-              </button>
-
-              {isOpen && (
-                <div className="programme-accordion-panel">
-                  <div className="programme-feature">
-                    <img src={snapshot.image} alt={snapshot.alt} loading="lazy" />
-                    <div className="programme-feature-copy">
-                      <p className="programme-feature-label">Experience focus</p>
-                      <p>{snapshot.summary}</p>
-                    </div>
-                  </div>
-
-                  <div className="programme-detail-list">
-                    {snapshot.items.map((item) => (
-                      <article className="programme-detail" key={item.title}>
-                        <img src={item.image} alt={item.alt} loading="lazy" />
-                        <div className="programme-detail-copy">
-                          <h3>{item.title}</h3>
-                          <p>{item.description}</p>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      <a className="text-link text-link-light programme-contact-link" href="#contact" onClick={() => requestCategory('programme')} data-testid="link-programme-enquiry">Ask about the programme <ArrowUpRight size={16} /></a>
-    </section>
-  );
-}
-
-function ContactSection() {
-  return (
-    <section className="contact-section" id="contact" aria-labelledby="contact-title">
-      <div className="contact-heading">
-        <SectionLabel>Contact & partnership enquiries</SectionLabel>
-        <h2 className="display-heading" id="contact-title">LET’S BUILD<br />AFRICA’S FUTURE<br /><em>TOGETHER.</em></h2>
-        <p>For general enquiries, sponsorship, partnerships, exhibitions, programme participation, media or ticket information, start a conversation.</p>
-        <div className="contact-details">
-          <a href="mailto:info@acftafest.com" onClick={(event) => { event.preventDefault(); window.location.href = 'mailto:info@acftafest.com'; }} data-testid="link-contact-email"><span>EMAIL</span>info@acftafest.com<ArrowUpRight size={15} /></a>
-          <a href="tel:+2348063445195" data-testid="link-contact-phone"><span>PHONE</span>+234 806 344 5195<ArrowUpRight size={15} /></a>
-        </div>
-        <p className="contact-address-note">Contact details as currently published. The Abuja address and edition information require confirmation.</p>
-      </div>
-      <div className="contact-form-wrap"><div className="form-kicker">WRITE TO THE FESTIVAL TEAM</div><ContactForm /></div>
-    </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="footer-main">
-        <div className="footer-brand-block"><Wordmark footer /><p>A Pan-African festival bringing trade, talent and culture into one conversation.</p><div className="footer-theme">ONE AFRICA.<br /><em>ONE MARKET.</em><br />ONE FUTURE.</div></div>
-        <div className="footer-column"><span>EXPLORE</span><a href="#about" data-testid="link-footer-about">About us</a><a href="#event" data-testid="link-footer-event">The event</a><a href="#speakers" data-testid="link-footer-speakers">Featured speakers</a><a href="#programme" data-testid="link-footer-programme">Programme snapshot</a></div>
-        <div className="footer-column"><span>TAKE PART</span><a href={registrationUrl} data-testid="link-footer-register">Register <ArrowUpRight size={12} /></a><a href={ticketUrl} target="_blank" rel="noreferrer" data-testid="link-footer-ticket">Get a ticket <ArrowUpRight size={12} /></a><a href={partnerUrl} target="_blank" rel="noreferrer" data-testid="link-footer-partner">Become a partner <ArrowUpRight size={12} /></a><a href={sponsorUrl} target="_blank" rel="noreferrer" data-testid="link-footer-sponsor">Become a sponsor <ArrowUpRight size={12} /></a></div>
-        <div className="footer-column footer-contact"><span>GET IN TOUCH</span><a href="mailto:info@acftafest.com" onClick={(event) => { event.preventDefault(); window.location.href = 'mailto:info@acftafest.com'; }} data-testid="link-footer-email">info@acftafest.com</a><a href="tel:+2348063445195" data-testid="link-footer-phone">+234 806 344 5195</a><a href="#contact" data-testid="link-footer-contact">Send an enquiry <ArrowUpRight size={12} /></a></div>
-        <div className="footer-column footer-social"><span>FOLLOW THE FESTIVAL</span><a href="https://www.facebook.com/acftafest" target="_blank" rel="noreferrer" data-testid="link-footer-facebook">Facebook <ArrowUpRight size={12} /></a><a href="https://www.instagram.com/acftafest/reels" target="_blank" rel="noreferrer" data-testid="link-footer-instagram">Instagram <ArrowUpRight size={12} /></a></div>
-      </div>
-      <div className="footer-bottom"><span>© {new Date().getFullYear()} ACFTA Fest. All rights reserved.</span><span>Published theme and edition details remain subject to confirmation.</span><a href="#home" data-testid="link-back-to-top">Back to top <ArrowUpRight size={13} /></a></div>
-      <div className="footer-endline">ONE AFRICA. ONE MARKET. ONE FUTURE.</div>
-    </footer>
   );
 }
 

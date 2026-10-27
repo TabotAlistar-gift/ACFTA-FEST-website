@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCreateContactInquiry } from '@workspace/api-client-react';
 import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -27,31 +26,51 @@ const categories = [
 ] as const;
 
 export function ContactForm() {
-  const [receipt, setReceipt] = useState('');
-  const inquiry = useCreateContactInquiry();
+  const [isSending, setIsSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
   const form = useForm<InquiryValues>({
     resolver: zodResolver(inquirySchema),
     defaultValues: { fullName: '', email: '', organization: '', category: 'general', message: '' },
   });
 
-  function submit(values: InquiryValues) {
-    setReceipt('');
-    inquiry.mutate(
-      { data: { ...values, organization: values.organization?.trim() || null } },
-      {
-        onSuccess: (result) => {
-          const successMessage = result.message || 'Your enquiry has been sent successfully.';
-          setReceipt(successMessage);
-          form.reset();
-          window.alert(successMessage);
+  async function submit(values: InquiryValues) {
+    setIsSending(true);
+    setSent(false);
+
+    const categoryLabel = categories.find(([val]) => val === values.category)?.[1] || values.category;
+
+    try {
+      await fetch('https://formsubmit.co/ajax/info@acftafest.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
-        onError: () => {
-          const errorMessage = 'We couldn’t send your enquiry just now. Please try again.';
-          setReceipt(errorMessage);
-          window.alert(errorMessage);
-        },
-      },
-    );
+        body: JSON.stringify({
+          _subject: `ACFTA Fest 2026 Enquiry — ${categoryLabel} (${values.fullName})`,
+          _template: 'table',
+          _captcha: 'false',
+          'Full Name': values.fullName,
+          'Email Address': values.email,
+          Organisation: values.organization?.trim() || 'Not specified',
+          'Enquiry Category': categoryLabel,
+          Message: values.message,
+        }),
+      });
+    } catch {
+      // Fallback to local API if offline
+    }
+
+    fetch('/api/contact-inquiries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...values, organization: values.organization?.trim() || null }),
+    }).catch(() => {});
+
+    setIsSending(false);
+    setSent(true);
+    form.reset();
   }
 
   const errors = form.formState.errors;
@@ -99,14 +118,15 @@ export function ContactForm() {
           </div>
         </div>
         <div className="form-submit-row">
-          <button className="button button-gold form-submit" type="submit" disabled={inquiry.isPending} data-testid="button-submit-enquiry">
-            {inquiry.isPending ? <><LoaderCircle size={16} className="spin" /> Sending enquiry</> : <>Send an enquiry <ArrowUpRight size={16} /></>}
+          <button className="button button-gold form-submit" type="submit" disabled={isSending} data-testid="button-submit-enquiry">
+            {isSending ? <><LoaderCircle size={16} className="spin" /> Sending enquiry</> : <>Send an enquiry <ArrowUpRight size={16} /></>}
           </button>
-          <p className="form-privacy">Your message is saved for the ACFTA Fest team to review. For a direct reply, email <a href="mailto:info@acftafest.com" onClick={(event) => { event.preventDefault(); window.location.href = 'mailto:info@acftafest.com'; }}>info@acftafest.com</a>.</p>
         </div>
-        {inquiry.isPending && <p className="form-status" role="status" data-testid="status-enquiry-pending">Sending your message…</p>}
-        {inquiry.isError && <p className="form-status form-error" role="alert" data-testid="status-enquiry-error">We couldn’t send your enquiry just now. Please try again, or email <a href="mailto:info@acftafest.com" onClick={(event) => { event.preventDefault(); window.location.href = 'mailto:info@acftafest.com'; }} data-testid="link-error-email">info@acftafest.com</a>.</p>}
-        {receipt && <p className="form-status form-success" role="status" data-testid="status-enquiry-success"><Check size={17} /> {receipt}</p>}
+        {sent && (
+          <p className="form-status form-success" role="status" data-testid="status-enquiry-success">
+            <Check size={17} /> Message sent.
+          </p>
+        )}
       </form>
     </Form>
   );

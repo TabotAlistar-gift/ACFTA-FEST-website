@@ -53,3 +53,7 @@ Thumbs.db
 # Build cache
 .cache/
 .local/
+
+# Scratch files
+fetch-stands.mjs
+scraped-stands.json

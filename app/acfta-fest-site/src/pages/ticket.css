@@ -1,0 +1,221 @@
+/* ═══════════════════════════════════════════════════════════
+   ACFTA FEST – ELEVATED TICKETING & ACCREDITATION
+   Pure Logo & Revolving Orbit Text, Ultra-Responsive Pricing
+═══════════════════════════════════════════════════════════ */
+
+.tk-page {
+  --tk-deep: #062319;
+  --tk-forest: #123d2d;
+  --tk-yellow: #ECDA62;
+  --tk-yellow-hover: #e0b94f;
+  --tk-clay: #a6533b;
+  --tk-ivory: #f2eddf;
+  --tk-muted: rgba(242, 237, 223, 0.75);
+  --tk-border: rgba(236, 218, 98, 0.22);
+  background: var(--tk-deep);
+  color: var(--tk-ivory);
+  font-family: var(--app-font-sans, sans-serif);
+  min-height: 100vh;
+}
+
+/* ── Topbar ──────────────────────────────────────────────── */
+.tk-topbar {
+  position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem; background: rgba(6, 35, 25, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--tk-border);
+}
+@media (min-width: 768px) { .tk-topbar { padding: 1rem 3.5rem; } }
+.tk-brand img { height: 2.5rem; width: auto; object-fit: contain; }
+.tk-nav { display: none; align-items: center; gap: 2rem; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+@media (min-width: 768px) { .tk-nav { display: flex; } }
+.tk-nav a { color: var(--tk-ivory); text-decoration: none; transition: color 0.2s ease; }
+.tk-nav a:hover { color: var(--tk-yellow); }
+.tk-nav-cta {
+  display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.25rem;
+  border-radius: 9999px; background: var(--tk-yellow); color: #062319 !important;
+  font-weight: 800; text-decoration: none; transition: transform 0.2s ease, background 0.2s ease;
+}
+.tk-nav-cta:hover { transform: translateY(-1px); background: var(--tk-yellow-hover); }
+.tk-menu-btn { display: block; background: transparent; border: none; color: var(--tk-ivory); cursor: pointer; }
+@media (min-width: 768px) { .tk-menu-btn { display: none; } }
+.tk-nav.is-open {
+  display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
+  background: #041810; padding: 1.5rem; border-bottom: 1px solid var(--tk-border); gap: 1rem;
+}
+
+/* ── Left-Aligned Hero with Underlay ─────────────────────── */
+.tk-hero { position: relative; overflow: hidden; padding: 5rem 1.5rem 4rem; min-height: 80vh; display: flex; align-items: center; }
+@media (min-width: 768px) { .tk-hero { padding: 6rem 3.5rem 5rem; } }
+.tk-hero-underlay { position: absolute; inset: 0; z-index: 0; }
+.tk-hero-underlay-img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.tk-hero-underlay-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(6, 35, 25, 0.98) 0%, rgba(6, 35, 25, 0.92) 55%, rgba(6, 35, 25, 0.65) 100%),
+              linear-gradient(0deg, rgba(6, 35, 25, 1) 0%, transparent 40%);
+}
+
+.tk-hero-content {
+  position: relative; z-index: 10; width: 100%; max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;
+}
+@media (min-width: 990px) { .tk-hero-content { grid-template-columns: 1.25fr 0.75fr; } }
+
+.tk-hero-title {
+  font-family: var(--app-font-serif, serif); font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  font-weight: 600; line-height: 1.08; margin: 0 0 1.25rem; color: #ffffff; text-align: left;
+}
+.tk-title-yellow { color: var(--tk-yellow); font-style: italic; }
+.tk-hero-subtitle { font-size: clamp(1rem, 1.8vw, 1.18rem); color: var(--tk-muted); line-height: 1.65; max-width: 640px; margin: 0 0 2rem; text-align: left; }
+
+.tk-hero-meta-row { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; }
+.tk-meta-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem;
+  border-radius: 9999px; background: rgba(18, 61, 45, 0.7); border: 1px solid var(--tk-border);
+  font-size: 0.78rem; font-weight: 700; color: #ffffff;
+}
+
+/* ── Hero Right: Center Logo + Surrounding Revolving Text (NO CARD / NO BOX!) ── */
+.tk-hero-orbit-container { display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.tk-orbit-stage {
+  position: relative; width: 250px; height: 250px; display: grid; place-items: center;
+}
+@media (min-width: 640px) { .tk-orbit-stage { width: 290px; height: 290px; } }
+
+.tk-orbit-center-logo {
+  position: relative; z-index: 5; width: 130px; height: 130px;
+  display: grid; place-items: center; background: transparent;
+  border: none; box-shadow: none;
+}
+@media (min-width: 640px) { .tk-orbit-center-logo { width: 150px; height: 150px; } }
+.tk-center-logo-img {
+  width: 100%; height: auto; max-width: 125px; object-fit: contain;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
+}
+
+.tk-orbit-revolving-text {
+  position: absolute; inset: 0; animation: tk-orbit-spin 22s linear infinite;
+  display: grid; place-items: center; pointer-events: none;
+}
+@keyframes tk-orbit-spin { to { transform: rotate(360deg); } }
+.tk-orbit-svg { width: 100%; height: 100%; }
+.tk-orbit-text {
+  fill: var(--tk-yellow); font-size: 11px; font-weight: 800; letter-spacing: 0.16em;
+  font-family: var(--app-font-sans, sans-serif); text-transform: uppercase;
+}
+
+/* ── Passes Section ──────────────────────────────────────── */
+.tk-showcase-section { padding: 4rem 1.5rem 5rem; max-width: 1280px; margin: 0 auto; }
+@media (min-width: 768px) { .tk-showcase-section { padding: 5rem 3.5rem 6rem; } }
+.tk-section-header-left { max-width: 780px; margin-bottom: 3rem; }
+.tk-section-title { font-family: var(--app-font-serif, serif); font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 600; line-height: 1.15; color: var(--tk-ivory); margin: 0 0 0.75rem; }
+.tk-section-subtitle { font-size: 0.95rem; color: var(--tk-muted); line-height: 1.6; margin: 0; }
+.tk-showcase-flow { display: flex; flex-direction: column; gap: 2.5rem; }
+
+/* Flagship VIP Pass */
+.tk-master-vip-credential {
+  position: relative; border-radius: 1.25rem; overflow: hidden;
+  border: 1.5px solid var(--tk-border); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+}
+.tk-vip-underlay { position: absolute; inset: 0; z-index: 0; }
+.tk-vip-underlay-img { width: 100%; height: 100%; object-fit: cover; }
+.tk-vip-underlay-tint {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(6, 35, 25, 0.98) 0%, rgba(6, 35, 25, 0.94) 55%, rgba(6, 35, 25, 0.85) 100%);
+}
+.tk-vip-content { position: relative; z-index: 10; padding: 1.75rem; }
+@media (min-width: 640px) { .tk-vip-content { padding: 2.5rem; } }
+.tk-vip-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+@media (min-width: 960px) { .tk-vip-grid { grid-template-columns: 1.35fr 0.65fr; align-items: center; } }
+.tk-vip-title { font-family: var(--app-font-serif, serif); font-size: clamp(1.85rem, 3vw, 2.5rem); font-weight: 600; margin: 0 0 0.35rem; color: #ffffff; }
+.tk-vip-date { font-size: 0.85rem; font-weight: 700; margin: 0 0 0.75rem; }
+.tk-vip-desc { font-size: 0.92rem; color: var(--tk-muted); line-height: 1.6; margin: 0 0 1.5rem; max-width: 600px; }
+.tk-vip-perks-heading { margin-bottom: 0.85rem; }
+.tk-vip-perks-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 0.65rem; }
+@media (min-width: 640px) { .tk-vip-perks-list { grid-template-columns: 1fr 1fr; } }
+.tk-vip-perks-list li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.85rem; color: var(--tk-ivory); }
+.tk-vip-check { display: grid; place-items: center; width: 1.15rem; height: 1.15rem; border-radius: 9999px; background: rgba(236, 218, 98, 0.2); color: var(--tk-yellow); flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Fully Responsive VIP CTA Box (No price overlap or break on mobile) */
+.tk-vip-cta-col {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 1.25rem 1rem; border-radius: 0.85rem; background: rgba(18, 61, 45, 0.7);
+  border: 1px solid var(--tk-border); width: 100%; box-sizing: border-box;
+}
+@media (min-width: 640px) { .tk-vip-cta-col { padding: 2rem; } }
+.tk-vip-price-box { width: 100%; margin-bottom: 1rem; }
+.tk-vip-price-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--tk-muted); display: block; }
+.tk-vip-price-val {
+  font-family: var(--app-font-serif, serif); font-size: clamp(1.4rem, 5vw, 2.25rem);
+  font-weight: 700; color: var(--tk-yellow); margin: 0.35rem 0; line-height: 1.1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
+}
+@media (max-width: 480px) {
+  .tk-vip-content { padding: 1.25rem 0.85rem; }
+  .tk-vip-cta-col { padding: 1rem 0.75rem; }
+  .tk-vip-price-val { font-size: 1.5rem; }
+}
+.tk-vip-price-sub { font-size: 0.76rem; color: var(--tk-muted); display: block; max-width: 260px; margin: 0 auto; }
+.tk-vip-btn {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.9rem 1.5rem; border-radius: 0.35rem; background: var(--tk-yellow);
+  color: #062319; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.06em;
+  text-transform: uppercase; cursor: pointer; border: none; transition: all 0.2s ease;
+}
+.tk-vip-btn:hover { background: var(--tk-yellow-hover); transform: translateY(-2px); }
+
+/* Single-Day Pass Stubs */
+.tk-stubs-row { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+@media (min-width: 860px) { .tk-stubs-row { grid-template-columns: 1fr 1fr; } }
+.tk-stub-ticket {
+  position: relative; border-radius: 1rem; overflow: hidden;
+  border: 1px solid var(--tk-border); display: flex; flex-direction: column;
+}
+.tk-stub-underlay { position: absolute; inset: 0; z-index: 0; }
+.tk-stub-underlay-img { width: 100%; height: 100%; object-fit: cover; }
+.tk-stub-tint { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(6, 35, 25, 0.97) 0%, rgba(18, 61, 45, 0.94) 100%); }
+
+.tk-stub-body { position: relative; z-index: 10; padding: 1.75rem; display: flex; flex-direction: column; flex: 1; }
+@media (min-width: 640px) { .tk-stub-body { padding: 2rem; } }
+.tk-stub-title { font-family: var(--app-font-serif, serif); font-size: 1.55rem; font-weight: 600; color: #ffffff; margin: 0 0 0.25rem; }
+.tk-stub-date { font-size: 0.8rem; font-weight: 700; margin: 0 0 0.5rem; }
+.tk-stub-desc { font-size: 0.85rem; color: var(--tk-muted); line-height: 1.5; margin: 0 0 1.25rem; }
+.tk-stub-highlights { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.tk-stub-highlights li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.82rem; color: var(--tk-ivory); }
+
+.tk-stub-footer {
+  margin-top: auto; padding-top: 1.25rem; border-top: 1px dashed var(--tk-border);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.85rem;
+}
+.tk-stub-price span { display: block; font-size: 0.68rem; text-transform: uppercase; color: var(--tk-muted); }
+.tk-stub-price strong { font-family: var(--app-font-serif, serif); font-size: clamp(1.35rem, 4vw, 1.6rem); color: var(--tk-yellow); }
+.tk-stub-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.75rem 1.35rem;
+  border-radius: 0.35rem; font-size: 0.78rem; font-weight: 800; text-transform: uppercase;
+  cursor: pointer; border: none; transition: all 0.2s ease; background: var(--tk-yellow); color: #062319;
+}
+.tk-stub-btn:hover { background: var(--tk-yellow-hover); transform: translateY(-2px); }
+
+/* ── Crisp White Background FAQ ──────────────────────────── */
+.tk-faq-white-section { background: #ffffff; color: #123d2d; padding: 5rem 1.5rem; border-top: 1px solid #e9e2d2; }
+@media (min-width: 768px) { .tk-faq-white-section { padding: 6rem 3.5rem; } }
+.tk-faq-white-container { max-width: 860px; margin: 0 auto; }
+.tk-faq-white-title {
+  font-family: var(--app-font-serif, serif); font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 600; color: #123d2d; margin: 0 0 2.5rem; text-align: left;
+}
+.tk-faq-white-list { display: flex; flex-direction: column; gap: 1rem; }
+.tk-faq-white-item {
+  border-radius: 0.5rem; background: #faf8f5; border: 1px solid #e5ded0; overflow: hidden;
+}
+.tk-faq-white-trigger {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 1.5rem; background: transparent; border: none; cursor: pointer; text-align: left;
+}
+.tk-faq-white-body { padding: 0 1.5rem 1.25rem; font-size: 0.9rem; color: #526459; line-height: 1.65; }
+
+/* ── Minimal Ticket Footer ───────────────────────────────── */
+.tk-footer { border-top: 1px solid var(--tk-border); padding: 2.25rem 1.5rem; background: #03130c; }
+.tk-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+@media (min-width: 768px) { .tk-footer-inner { flex-direction: row; justify-content: space-between; } }
+.tk-footer-logo img { height: 2rem; width: auto; }
+.tk-footer-motto { font-size: 0.8rem; color: var(--tk-muted); margin: 0; }
+.tk-footer-links a { color: var(--tk-yellow); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.82rem; font-weight: 700; }

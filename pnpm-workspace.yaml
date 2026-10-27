@@ -2,6 +2,7 @@ packages:
   - app/*
   - lib/*
 
+autoInstallPeers: true
 allowBuilds:
   esbuild: true
 
