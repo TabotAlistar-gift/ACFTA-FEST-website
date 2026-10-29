@@ -1,52 +1,135 @@
-import { useState } from 'react';
-import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
-import { REGISTRATION_STREAMS, type RegistrationStream, type StreamKey } from '@/data/registerData';
+import { useEffect, useState } from 'react';
+import { AlertCircle, ArrowLeft, ArrowRight, LoaderCircle, Sparkles } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { useLocation } from 'wouter';
+import { type RegistrationStream } from '@/data/registerData';
+import {
+  COUNTRIES,
+  STREAM_OPTIONS,
+  clearRegistrationDraft,
+  loadRegistrationDraft,
+  registrationFormResolver,
+  saveRegistrationDraft,
+  type RegisterFormData,
+} from '@/lib/registrationSchema';
 
-export interface RegisterFormData {
-  streamKey: StreamKey;
-  fullName: string;
-  email: string;
-  phone: string;
-  country: string;
-  organization: string;
-  role: string;
-  streamOption: string;
-  notes: string;
-  agreed: boolean;
-}
+export type { RegisterFormData };
 
 interface PortalProps {
   currentStream: RegistrationStream;
-  onSelectStream: (key: StreamKey) => void;
   onSuccess: (data: RegisterFormData) => void;
 }
 
-const STREAM_OPTIONS: Record<StreamKey, string[]> = {
-  vendor: ['Standard Artisan Stand (1m x 2m)', 'Premium Pavilion Booth (3m x 3m)', 'Culinary & Food Court Stall', 'Tech & Innovation Showcase Bay'],
-  volunteer: ['Guest Relations & VIP Protocol', 'Media, Press & Social Broadcast', 'Stage Management & Artist Liaison', 'Language Translation & Interpretation'],
-  delegate: ['Venture Capital & Dealroom Matchmaking', 'Cross-Border Trade Policy & Tariff Advisory', 'Agribusiness & Renewable Energy Synergies', 'Creative Economy & Digital Intellectual Property'],
-  attendee: ['Heritage Waves Cultural Spectacle & Concerts', 'African Legends United Football Gala Match', 'Startup Flames Innovation & Pitch Arena', 'Full 3-Day Festival Observer Access'],
-};
-
-export function RegisterPortal({ currentStream, onSelectStream, onSuccess }: PortalProps) {
+export function RegisterPortal({ currentStream, onSuccess }: PortalProps) {
+  const [, navigate] = useLocation();
   const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [form, setForm] = useState<RegisterFormData>({
-    streamKey: currentStream.key, fullName: '', email: '', phone: '', country: '',
-    organization: '', role: '', streamOption: '', notes: '', agreed: false,
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const form = useForm<RegisterFormData>({
+    resolver: registrationFormResolver,
+    mode: 'onTouched',
+    shouldUnregister: false,
+    defaultValues: loadRegistrationDraft(currentStream.key),
   });
 
-  const update = (key: keyof RegisterFormData, value: string | boolean) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+  const { register, handleSubmit, trigger, watch, setValue, formState: { errors } } = form;
+  const values = watch();
+
+  useEffect(() => {
+    const validOpts = STREAM_OPTIONS[currentStream.key];
+    setValue('streamKey', currentStream.key);
+    if (values.streamOption && !validOpts.includes(values.streamOption)) {
+      setValue('streamOption', '');
+    }
+  }, [currentStream.key, setValue, values.streamOption]);
+
+  useEffect(() => {
+    const subscription = watch((val) => saveRegistrationDraft(val as Partial<RegisterFormData>));
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  const handleNextToStep2 = async () => {
+    setSubmitError(null);
+    const valid = await trigger(['fullName', 'email', 'phone', 'country'], { shouldFocus: true });
+    if (valid) {
+      setStep(2);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
-  const isStep1Valid = Boolean(form.fullName.trim() && form.email.trim() && form.phone.trim() && form.country.trim());
-  const isStep2Valid = Boolean(form.organization.trim() && form.role.trim() && form.streamOption.trim() && form.notes.trim());
-  const canSubmit = Boolean(isStep1Valid && isStep2Valid && form.agreed);
+  const handleNextToStep3 = async () => {
+    setSubmitError(null);
+    const valid = await trigger(['organization', 'role', 'streamOption', 'notes'], { shouldFocus: true });
+    if (valid) {
+      setStep(3);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!canSubmit) return;
-    onSuccess({ ...form, streamKey: currentStream.key });
+  const onSubmit = async (validData: RegisterFormData) => {
+    setSubmitError(null);
+    setIsSubmitting(true);
+    const payload: RegisterFormData = { ...validData, streamKey: currentStream.key };
+    const codePrefix = payload.country.replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase() || 'AFR';
+    let confirmedRegistrationId = `ACFTA-2026-${codePrefix}-${Math.floor(1000 + Math.random() * 9000)}`;
+    let backendHandled = false;
+
+    try {
+      const apiRes = await fetch('/api/registrations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const contentType = apiRes.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const json = await apiRes.json();
+        if (!apiRes.ok) {
+          setIsSubmitting(false);
+          setSubmitError(json.error || 'Please check your registration details and try again.');
+          return;
+        }
+        if (json.registrationId) confirmedRegistrationId = json.registrationId;
+        backendHandled = true;
+      }
+    } catch {
+      // Static deployment fallback: proceed with direct email dispatch verification
+    }
+
+    try {
+      const emailRes = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(payload.email)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `ACFTA Fest — Thank You for Registering (ID: ${confirmedRegistrationId})`,
+          _template: 'table',
+          Sender: 'ACFTA Fest',
+          Message: `Thank you for registering for ACFTA Fest, ${payload.fullName}! Your official Registration ID is ${confirmedRegistrationId}.`,
+          Registration_ID: confirmedRegistrationId,
+          Stream: currentStream.title,
+          Full_Name: payload.fullName,
+          Email: payload.email,
+          Phone: payload.phone,
+          Country: payload.country,
+          Organization: `${payload.organization} (${payload.role})`,
+          Track_Option: payload.streamOption,
+          Notes: payload.notes,
+        }),
+      });
+      if (!backendHandled && !emailRes.ok) {
+        throw new Error('Unable to complete registration submission. Please check your connection and try again.');
+      }
+    } catch (err) {
+      if (!backendHandled) {
+        setIsSubmitting(false);
+        setSubmitError(err instanceof Error ? err.message : 'Unable to submit registration right now. Please try again.');
+        return;
+      }
+    }
+
+    clearRegistrationDraft();
+    setIsSubmitting(false);
+    onSuccess({ ...payload, registrationId: confirmedRegistrationId });
   };
 
   const optionLabel =
@@ -56,161 +139,158 @@ export function RegisterPortal({ currentStream, onSelectStream, onSuccess }: Por
 
   const summaryRows: [string, string][] = [
     ['Selected Track', currentStream.title],
-    ['Full Name', form.fullName],
-    ['Email', form.email],
-    ['Phone', form.phone],
-    ['Country', form.country],
-    ['Organization / Brand', `${form.organization} (${form.role})`],
-    ['Focus / Preference', form.streamOption],
-    ['Notes', form.notes],
+    ['Full Name', values.fullName],
+    ['Email', values.email],
+    ['Phone', values.phone],
+    ['Country / Citizenship', values.country],
+    ['Organization / Brand', `${values.organization} (${values.role})`],
+    ['Focus / Preference', values.streamOption],
+    ['Notes & Requirements', values.notes],
   ];
 
   return (
     <section className="reg-portal-section" id="registration-portal">
       <div className="reg-portal-container">
-        <div className="reg-portal-stream-bar">
-          <span className="reg-bar-label">Current Pathway:</span>
-          <div className="reg-bar-pills">
-            {REGISTRATION_STREAMS.map((s) => (
-              <button
-                key={s.key}
-                type="button"
-                className={`reg-bar-pill ${currentStream.key === s.key ? 'is-active' : ''}`}
-                onClick={() => {
-                  onSelectStream(s.key);
-                  update('streamKey', s.key);
-                  update('streamOption', '');
-                  if (step === 3) setStep(2);
-                }}
-              >
-                <span>{s.number}. {s.title.split('&')[0].trim()}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
         <div className="reg-portal-card">
           <div className="reg-portal-top">
             <div className="reg-portal-meta">
-              <span className="reg-portal-badge">{currentStream.badge}</span>
-              <h3 className="reg-portal-title">{currentStream.title} Application</h3>
+              <span className="reg-portal-badge">{currentStream.badge} · {currentStream.subtitle}</span>
+              <h1 className="reg-portal-title">{currentStream.title} Registration</h1>
               <p className="reg-portal-desc">{currentStream.tagline}</p>
             </div>
-            <div className="reg-portal-steps">
-              <div className={`reg-step-node ${step >= 1 ? 'is-active' : ''}`}><span className="reg-step-num">1</span><span className="reg-step-name">Profile</span></div>
+            <div className="reg-portal-steps" role="navigation" aria-label="Registration steps">
+              <button type="button" onClick={() => setStep(1)} className={`reg-step-node ${step >= 1 ? 'is-active' : ''}`}>
+                <span className="reg-step-num">1</span><span className="reg-step-name">Profile</span>
+              </button>
               <div className="reg-step-line" />
-              <div className={`reg-step-node ${step >= 2 ? 'is-active' : ''}`}><span className="reg-step-num">2</span><span className="reg-step-name">Track Details</span></div>
+              <button type="button" onClick={() => { if (step > 2) setStep(2); else void handleNextToStep2(); }} className={`reg-step-node ${step >= 2 ? 'is-active' : ''}`}>
+                <span className="reg-step-num">2</span><span className="reg-step-name">Track Details</span>
+              </button>
               <div className="reg-step-line" />
-              <div className={`reg-step-node ${step === 3 ? 'is-active' : ''}`}><span className="reg-step-num">3</span><span className="reg-step-name">Review</span></div>
+              <button type="button" disabled={step < 3} className={`reg-step-node ${step === 3 ? 'is-active' : ''}`}>
+                <span className="reg-step-num">3</span><span className="reg-step-name">Review</span>
+              </button>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="reg-portal-form">
-            {step === 1 && (
-              <div className="reg-step-content">
-                <div className="reg-step-title-wrap">
-                  <h4 className="reg-form-heading">Personal & Contact Credentials</h4>
-                  <p className="reg-form-caption">Please complete all required fields to continue to Track Details.</p>
-                </div>
-                <div className="reg-grid-2">
-                  <div className="reg-input-group">
-                    <label htmlFor="reg-fullname">Full Name (as on Passport / ID) *</label>
-                    <input id="reg-fullname" type="text" placeholder="e.g. Alaba Adebayo" value={form.fullName} onChange={(e) => update('fullName', e.target.value)} required />
-                  </div>
-                  <div className="reg-input-group">
-                    <label htmlFor="reg-email">Official / Corporate Email *</label>
-                    <input id="reg-email" type="email" placeholder="e.g. a.adebayo@enterprise.africa" value={form.email} onChange={(e) => update('email', e.target.value)} required />
-                  </div>
-                </div>
-                <div className="reg-grid-2">
-                  <div className="reg-input-group">
-                    <label htmlFor="reg-phone">Phone Number (with Country Code) *</label>
-                    <input id="reg-phone" type="tel" placeholder="+220 ... or +234 ..." value={form.phone} onChange={(e) => update('phone', e.target.value)} required />
-                  </div>
-                  <div className="reg-input-group">
-                    <label htmlFor="reg-country">Country of Citizenship / Residence *</label>
-                    <input id="reg-country" type="text" placeholder="e.g. Gambia, Nigeria, Ghana, Kenya..." value={form.country} onChange={(e) => update('country', e.target.value)} required />
-                  </div>
-                </div>
-                <div className="reg-step-actions">
-                  <div />
-                  <button type="button" disabled={!isStep1Valid} onClick={() => { if (isStep1Valid) setStep(2); }} className="reg-btn-primary">
-                    <span>Proceed to Track Details</span><ArrowRight size={15} />
-                  </button>
-                </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="reg-portal-form" noValidate>
+            <div className={`reg-step-content ${step !== 1 ? 'is-hidden' : ''}`} hidden={step !== 1}>
+              <div className="reg-step-title-wrap">
+                <h2 className="reg-form-heading">Personal &amp; Contact Credentials</h2>
+                <p className="reg-form-caption">Enter your official contact details to continue.</p>
               </div>
-            )}
-
-            {step === 2 && (
-              <div className="reg-step-content">
-                <div className="reg-step-title-wrap">
-                  <h4 className="reg-form-heading">{currentStream.title} Specifications</h4>
-                  <p className="reg-form-caption">All fields below are required before proceeding to review.</p>
-                </div>
-                <div className="reg-grid-2">
-                  <div className="reg-input-group">
-                    <label htmlFor="reg-org">Organization / Company / Brand Name *</label>
-                    <input id="reg-org" type="text" placeholder="e.g. AfriTech Ventures or Gambian Creative Guild" value={form.organization} onChange={(e) => update('organization', e.target.value)} required />
-                  </div>
-                  <div className="reg-input-group">
-                    <label htmlFor="reg-role">Designation / Role Title *</label>
-                    <input id="reg-role" type="text" placeholder="e.g. Managing Partner, Creative Director, Volunteer" value={form.role} onChange={(e) => update('role', e.target.value)} required />
-                  </div>
+              <div className="reg-grid-2">
+                <div className="reg-input-group">
+                  <label htmlFor="reg-fullname">Full Name (as on Passport / ID) *</label>
+                  <input id="reg-fullname" type="text" autoComplete="name" placeholder="e.g. Alaba Adebayo or Sékou N'Dour" aria-invalid={!!errors.fullName} {...register('fullName')} />
+                  {errors.fullName && <span className="reg-field-error" role="alert">{errors.fullName.message}</span>}
                 </div>
                 <div className="reg-input-group">
-                  <label htmlFor="reg-opt">{optionLabel}</label>
-                  <select id="reg-opt" value={form.streamOption} onChange={(e) => update('streamOption', e.target.value)} required>
-                    <option value="">-- Select an option --</option>
-                    {STREAM_OPTIONS[currentStream.key].map((opt) => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                  </select>
+                  <label htmlFor="reg-email">Official / Personal Email Address *</label>
+                  <input id="reg-email" type="email" autoComplete="email" placeholder="e.g. a.adebayo@enterprise.africa" aria-invalid={!!errors.email} {...register('email')} />
+                  {errors.email && <span className="reg-field-error" role="alert">{errors.email.message}</span>}
+                </div>
+              </div>
+              <div className="reg-grid-2">
+                <div className="reg-input-group">
+                  <label htmlFor="reg-phone">Phone Number (with International Code) *</label>
+                  <input id="reg-phone" type="tel" autoComplete="tel" placeholder="e.g. +220 701 2345 or +234 803 123 4567" aria-invalid={!!errors.phone} {...register('phone')} />
+                  {errors.phone && <span className="reg-field-error" role="alert">{errors.phone.message}</span>}
                 </div>
                 <div className="reg-input-group">
-                  <label htmlFor="reg-notes">Special Requirements, Notes, or Portfolio Links *</label>
-                  <textarea id="reg-notes" rows={3} placeholder="Briefly state your goals, accessibility needs, or links to your work..." value={form.notes} onChange={(e) => update('notes', e.target.value)} required />
-                </div>
-                <div className="reg-step-actions">
-                  <button type="button" onClick={() => setStep(1)} className="reg-btn-secondary">
-                    <ArrowLeft size={15} /><span>Back to Profile</span>
-                  </button>
-                  <button type="button" disabled={!isStep2Valid} onClick={() => { if (isStep2Valid) setStep(3); }} className="reg-btn-primary">
-                    <span>Proceed to Review</span><ArrowRight size={15} />
-                  </button>
+                  <label htmlFor="reg-country">Country of Citizenship / Residence *</label>
+                  <input id="reg-country" list="acfta-countries-list" type="text" autoComplete="country-name" placeholder="Type to search or select country..." aria-invalid={!!errors.country} {...register('country')} />
+                  <datalist id="acfta-countries-list">
+                    {COUNTRIES.map((c) => <option key={c} value={c} />)}
+                  </datalist>
+                  {errors.country && <span className="reg-field-error" role="alert">{errors.country.message}</span>}
                 </div>
               </div>
-            )}
+              <div className="reg-step-actions">
+                <button type="button" onClick={() => navigate('/register')} className="reg-btn-secondary" data-testid="button-go-back-step-1">
+                  <ArrowLeft size={15} /><span>Go Back</span>
+                </button>
+                <button type="button" onClick={handleNextToStep2} className="reg-btn-primary" data-testid="button-proceed-step-1">
+                  <span>Proceed</span><ArrowRight size={15} />
+                </button>
+              </div>
+            </div>
 
-            {step === 3 && (
-              <div className="reg-step-content">
-                <div className="reg-step-title-wrap">
-                  <h4 className="reg-form-heading">Review & Authorization</h4>
-                  <p className="reg-form-caption">Verify your registration credentials prior to submission.</p>
+            <div className={`reg-step-content ${step !== 2 ? 'is-hidden' : ''}`} hidden={step !== 2}>
+              <div className="reg-step-title-wrap">
+                <h2 className="reg-form-heading">{currentStream.title} Specifications</h2>
+                <p className="reg-form-caption">Provide your organization and pathway details.</p>
+              </div>
+              <div className="reg-grid-2">
+                <div className="reg-input-group">
+                  <label htmlFor="reg-org">Organization / Company / Institution *</label>
+                  <input id="reg-org" type="text" autoComplete="organization" placeholder="e.g. AfriTech Ventures or Gambian Creative Guild" aria-invalid={!!errors.organization} {...register('organization')} />
+                  {errors.organization && <span className="reg-field-error" role="alert">{errors.organization.message}</span>}
                 </div>
-                <div className="reg-review-summary">
-                  {summaryRows.map(([k, v]) => (
-                    <div className="reg-summary-row" key={k}>
-                      <span className="reg-summary-k">{k}</span>
-                      <strong className="reg-summary-v">{v}</strong>
-                    </div>
-                  ))}
-                </div>
-                <div className="reg-consent-box">
-                  <label className="reg-consent-label">
-                    <input type="checkbox" checked={form.agreed} onChange={(e) => update('agreed', e.target.checked)} required />
-                    <span>I declare that the information provided is accurate and agree to adhere to the official ACFTA Fest 2026 Code of Conduct, security guidelines, and terms in Banjul, The Gambia.</span>
-                  </label>
-                </div>
-                <div className="reg-step-actions">
-                  <button type="button" onClick={() => setStep(2)} className="reg-btn-secondary">
-                    <ArrowLeft size={15} /><span>Back to Track Details</span>
-                  </button>
-                  <button type="submit" disabled={!canSubmit} className="reg-btn-submit">
-                    <span>Submit Official Application</span><Sparkles size={16} />
-                  </button>
+                <div className="reg-input-group">
+                  <label htmlFor="reg-role">Designation / Role Title *</label>
+                  <input id="reg-role" type="text" autoComplete="organization-title" placeholder="e.g. Managing Partner, Creative Director, Volunteer" aria-invalid={!!errors.role} {...register('role')} />
+                  {errors.role && <span className="reg-field-error" role="alert">{errors.role.message}</span>}
                 </div>
               </div>
-            )}
+              <div className="reg-input-group">
+                <label htmlFor="reg-opt">{optionLabel}</label>
+                <select id="reg-opt" aria-invalid={!!errors.streamOption} {...register('streamOption')}>
+                  <option value="">-- Select an option --</option>
+                  {STREAM_OPTIONS[currentStream.key].map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+                {errors.streamOption && <span className="reg-field-error" role="alert">{errors.streamOption.message}</span>}
+              </div>
+              <div className="reg-input-group">
+                <label htmlFor="reg-notes">Special Requirements, Notes, or Portfolio Links *</label>
+                <textarea id="reg-notes" rows={3} placeholder="Briefly state your goals, accessibility needs, or links to your work (at least 10 characters)..." aria-invalid={!!errors.notes} {...register('notes')} />
+                {errors.notes && <span className="reg-field-error" role="alert">{errors.notes.message}</span>}
+              </div>
+              <div className="reg-step-actions">
+                <button type="button" onClick={() => { setSubmitError(null); setStep(1); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="reg-btn-secondary" data-testid="button-go-back-step-2">
+                  <ArrowLeft size={15} /><span>Go Back</span>
+                </button>
+                <button type="button" onClick={handleNextToStep3} className="reg-btn-primary" data-testid="button-proceed-step-2">
+                  <span>Proceed</span><ArrowRight size={15} />
+                </button>
+              </div>
+            </div>
+
+            <div className={`reg-step-content ${step !== 3 ? 'is-hidden' : ''}`} hidden={step !== 3}>
+              <div className="reg-step-title-wrap">
+                <h2 className="reg-form-heading">Review &amp; Authorization</h2>
+                <p className="reg-form-caption">Verify your registration credentials prior to submission.</p>
+              </div>
+              <div className="reg-review-summary">
+                {summaryRows.map(([k, v]) => (
+                  <div className="reg-summary-row" key={k}>
+                    <span className="reg-summary-k">{k}</span>
+                    <strong className="reg-summary-v">{v}</strong>
+                  </div>
+                ))}
+              </div>
+              <div className="reg-consent-box">
+                <label className="reg-consent-label">
+                  <input type="checkbox" {...register('agreed')} />
+                  <span>I declare that the information provided is accurate and agree to adhere to the official ACFTA Fest 2026 Code of Conduct, security guidelines, and terms in Banjul, The Gambia.</span>
+                </label>
+                {errors.agreed && <span className="reg-field-error" role="alert">{errors.agreed.message}</span>}
+              </div>
+              {submitError && (
+                <div className="reg-submit-error-banner" role="alert">
+                  <AlertCircle size={16} />
+                  <span>{submitError}</span>
+                </div>
+              )}
+              <div className="reg-step-actions">
+                <button type="button" onClick={() => { setSubmitError(null); setStep(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} disabled={isSubmitting} className="reg-btn-secondary" data-testid="button-go-back-step-3">
+                  <ArrowLeft size={15} /><span>Go Back</span>
+                </button>
+                <button type="submit" disabled={isSubmitting} className="reg-btn-submit" data-testid="button-submit-registration">
+                  {isSubmitting ? <><LoaderCircle size={16} className="spin" /><span>Submitting Application...</span></> : <><span>Submit Official Application</span><Sparkles size={16} /></>}
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>

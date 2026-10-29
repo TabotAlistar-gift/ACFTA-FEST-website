@@ -1,32 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowUpRight, Crown, Menu, X } from 'lucide-react';
 import { Link } from 'wouter';
-import { REGISTRATION_STREAMS, type StreamKey } from '@/data/registerData';
 import { RegisterHero } from '@/components/register/RegisterHero';
 import { RegisterTracks } from '@/components/register/RegisterTracks';
-import { RegisterPortal, type RegisterFormData } from '@/components/register/RegisterPortal';
-import { RegisterSuccess } from '@/components/register/RegisterSuccess';
 import './register.css';
 
 export default function RegisterPage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedKey, setSelectedKey] = useState<StreamKey>('delegate');
-  const [portalOpen, setPortalOpen] = useState(false);
-  const [submittedData, setSubmittedData] = useState<RegisterFormData | null>(null);
 
-  const activeStream =
-    REGISTRATION_STREAMS.find((s) => s.key === selectedKey) || REGISTRATION_STREAMS[0];
-
-  const handleContinueWithStream = (key: StreamKey) => {
-    setSelectedKey(key);
-    setPortalOpen(true);
-    setTimeout(() => {
-      const portalEl = document.getElementById('registration-portal');
-      if (portalEl) {
-        portalEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 90);
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="reg-page-shell">
@@ -57,13 +41,18 @@ export default function RegisterPage() {
               <span>Festival Home</span>
               <ArrowUpRight size={16} />
             </Link>
-            <Link href="/tickets" onClick={() => setMenuOpen(false)}>
+            <Link href="/about" onClick={() => setMenuOpen(false)}>
               <span className="reg-drawer-idx">02</span>
+              <span>About Us</span>
+              <ArrowUpRight size={16} />
+            </Link>
+            <Link href="/tickets" onClick={() => setMenuOpen(false)}>
+              <span className="reg-drawer-idx">03</span>
               <span>Tickets</span>
               <ArrowUpRight size={16} />
             </Link>
             <Link href="/partnership" onClick={() => setMenuOpen(false)}>
-              <span className="reg-drawer-idx">03</span>
+              <span className="reg-drawer-idx">04</span>
               <span>Partnerships</span>
               <ArrowUpRight size={16} />
             </Link>
@@ -80,39 +69,11 @@ export default function RegisterPage() {
       </header>
 
       <main>
-        {submittedData ? (
-          <RegisterSuccess
-            data={submittedData}
-            onReset={() => {
-              setSubmittedData(null);
-              setPortalOpen(false);
-            }}
-          />
-        ) : (
-          <>
-            {/* ── Atmospheric Hero with Underlay Picture ── */}
-            <RegisterHero />
+        {/* ── Atmospheric Hero with Underlay Picture ── */}
+        <RegisterHero />
 
-            {/* ── Editorial Alternating Streams (Ends at 04 General Attendees until Continue is clicked) ── */}
-            <RegisterTracks
-              selectedStream={selectedKey}
-              portalOpen={portalOpen}
-              onContinueWithStream={handleContinueWithStream}
-            />
-
-            {/* ── Hidden Until User Clicks "Continue with This Stream" ── */}
-            {portalOpen && (
-              <RegisterPortal
-                currentStream={activeStream}
-                onSelectStream={(key) => setSelectedKey(key)}
-                onSuccess={(data) => {
-                  setSubmittedData(data);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              />
-            )}
-          </>
-        )}
+        {/* ── Pathway Selection List (Navigates to Dedicated Pathway Subpages) ── */}
+        <RegisterTracks />
       </main>
 
       {/* ── Minimal Footer ── */}

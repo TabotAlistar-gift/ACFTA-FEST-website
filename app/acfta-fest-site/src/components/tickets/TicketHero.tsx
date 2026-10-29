@@ -4,10 +4,10 @@ import { Calendar, Globe2, MapPin } from 'lucide-react';
 export function TicketHero() {
   return (
     <section className="tk-hero">
-      {/* Background Image Underlay */}
+      {/* Background Image Underlay: African Commerce, Trade & Enterprise */}
       <div className="tk-hero-underlay" aria-hidden="true">
         <img
-          src="/images/heritage-waves.webp"
+          src="/images/register-vendors.jpg"
           alt=""
           className="tk-hero-underlay-img"
         />

@@ -1,12 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
-import { REGISTRATION_STREAMS, type RegistrationStream, type StreamKey } from '@/data/registerData';
-
-interface TracksProps {
-  selectedStream: StreamKey;
-  portalOpen: boolean;
-  onContinueWithStream: (key: StreamKey) => void;
-}
+import { Link } from 'wouter';
+import { REGISTRATION_STREAMS, type StreamKey } from '@/data/registerData';
 
 const STREAM_THEMES: Record<StreamKey, 'theme-white' | 'theme-clay' | 'theme-forest'> = {
   delegate: 'theme-white',
@@ -15,15 +10,7 @@ const STREAM_THEMES: Record<StreamKey, 'theme-white' | 'theme-clay' | 'theme-for
   attendee: 'theme-white',
 };
 
-export function RegisterTracks({
-  selectedStream,
-  portalOpen,
-  onContinueWithStream,
-}: TracksProps) {
-  const handleChoose = (stream: RegistrationStream) => {
-    onContinueWithStream(stream.key);
-  };
-
+export function RegisterTracks() {
   return (
     <div className="reg-tracks-wrapper">
       {/* Intro Header on Crisp White Background */}
@@ -35,9 +22,9 @@ export function RegisterTracks({
               Choose How You Shape <em>ACFTA Fest.</em>
             </h2>
             <p className="reg-tracks-lead">
-              Explore the four accredited festival pathways below. Click{' '}
-              <strong>Continue with This Stream</strong> on your chosen category to open the
-              registration form.
+              Explore the four accredited festival pathways below. Select{' '}
+              <strong>Continue with This Stream</strong> on your chosen category to open its
+              dedicated registration page.
             </p>
           </div>
         </div>
@@ -47,14 +34,13 @@ export function RegisterTracks({
       <div className="reg-tracks-editorial-list">
         {REGISTRATION_STREAMS.map((stream, idx) => {
           const isReversed = idx % 2 === 1;
-          const isSelected = portalOpen && selectedStream === stream.key;
           const themeClass = STREAM_THEMES[stream.key];
 
           return (
             <section
               key={stream.key}
               id={`stream-${stream.key}`}
-              className={`reg-stream-band ${themeClass} ${isSelected ? 'is-active-stream' : ''}`}
+              className={`reg-stream-band ${themeClass}`}
             >
               <div className="reg-tracks-container">
                 <div className={`reg-editorial-track ${isReversed ? 'is-reversed' : ''}`}>
@@ -81,7 +67,7 @@ export function RegisterTracks({
                     </div>
                   </motion.div>
 
-                  {/* Editorial Typography Column (No Boxed AI Cards) */}
+                  {/* Editorial Typography Column */}
                   <motion.div
                     initial={{ opacity: 0, y: 22 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -112,7 +98,7 @@ export function RegisterTracks({
                     </div>
 
                     <div className="reg-track-requirements">
-                      <span className="reg-req-label">Eligibility & Scope:</span>
+                      <span className="reg-req-label">Eligibility &amp; Scope:</span>
                       <p className="reg-req-text">{stream.requirements.join(' · ')}</p>
                     </div>
 
@@ -122,14 +108,14 @@ export function RegisterTracks({
                         <strong className="reg-fee-val">{stream.feeLabel}</strong>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => handleChoose(stream)}
+                      <Link
+                        href={stream.routePath}
                         className="reg-track-btn"
+                        data-testid={`button-pathway-${stream.key}`}
                       >
                         <span>Continue with This Stream · {stream.ctaText}</span>
                         <ArrowRight size={15} />
-                      </button>
+                      </Link>
                     </div>
                   </motion.div>
                 </div>

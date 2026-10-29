@@ -45,12 +45,15 @@
 /* ── Left-Aligned Hero with Underlay ─────────────────────── */
 .tk-hero { position: relative; overflow: hidden; padding: 5rem 1.5rem 4rem; min-height: 80vh; display: flex; align-items: center; }
 @media (min-width: 768px) { .tk-hero { padding: 6rem 3.5rem 5rem; } }
-.tk-hero-underlay { position: absolute; inset: 0; z-index: 0; }
-.tk-hero-underlay-img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.tk-hero-underlay { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.tk-hero-underlay-img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 28%;
+  opacity: 0.46; filter: contrast(1.06) saturate(1.08);
+}
 .tk-hero-underlay-gradient {
   position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(6, 35, 25, 0.98) 0%, rgba(6, 35, 25, 0.92) 55%, rgba(6, 35, 25, 0.65) 100%),
-              linear-gradient(0deg, rgba(6, 35, 25, 1) 0%, transparent 40%);
+  background: linear-gradient(100deg, rgba(6, 35, 25, 0.92) 0%, rgba(6, 35, 25, 0.74) 54%, rgba(6, 35, 25, 0.52) 100%),
+              linear-gradient(0deg, rgba(6, 35, 25, 0.95) 0%, transparent 42%);
 }
 
 .tk-hero-content {

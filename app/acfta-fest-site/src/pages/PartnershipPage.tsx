@@ -30,6 +30,7 @@ export default function PartnershipPage() {
 
         <nav className={`pt-nav ${menuOpen ? 'is-open' : ''}`}>
           <Link href="/" onClick={() => setMenuOpen(false)}>Festival Home</Link>
+          <Link href="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
           <a href="#tracks" onClick={() => setMenuOpen(false)}>Partnership Tracks</a>
           <Link href="/tickets" onClick={() => setMenuOpen(false)}>Tickets</Link>
           <button

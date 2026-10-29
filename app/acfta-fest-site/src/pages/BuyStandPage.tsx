@@ -42,6 +42,9 @@ export default function BuyStandPage() {
               <Link href="/" onClick={() => setMenuOpen(false)}>
                 Festival Home
               </Link>
+              <Link href="/about" onClick={() => setMenuOpen(false)}>
+                About Us
+              </Link>
               <Link href="/register" onClick={() => setMenuOpen(false)}>
                 Register
               </Link>

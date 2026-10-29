@@ -21,6 +21,7 @@ export default function TicketPage() {
 
         <nav className={`tk-nav ${menuOpen ? 'is-open' : ''}`}>
           <Link href="/" onClick={() => setMenuOpen(false)}>Festival Home</Link>
+          <Link href="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
           <a href="#passes" onClick={() => setMenuOpen(false)}>Ticket Options</a>
           <Link href="/register" onClick={() => setMenuOpen(false)}>Register</Link>
           <Link href="/partnership" onClick={() => setMenuOpen(false)}>Partnerships</Link>

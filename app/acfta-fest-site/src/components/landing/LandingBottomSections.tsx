@@ -1,17 +1,14 @@
-import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'wouter';
 import { ContactForm } from '@/components/ContactForm';
-import { programmeSnapshots, speakers } from '@/data/festival';
+import { speakers } from '@/data/festival';
 
 const ticketUrl = '/tickets';
 const registrationUrl = '/register';
 const standUrl = '/buy-a-stand';
 const sponsorUrl = '/not-found';
 const partnerUrl = '/partnership';
-
-function requestCategory(category: string) {
-  window.dispatchEvent(new CustomEvent('acfta:enquiry', { detail: category }));
-}
+const aboutUrl = '/about';
 
 function SectionLabel({ number, children, light = false }: { number?: string; children: string; light?: boolean }) {
   return (
@@ -46,64 +43,6 @@ export function SpeakersSection() {
   );
 }
 
-export function ProgrammeSection() {
-  const [openGroup, setOpenGroup] = useState('Startup Flames Arena');
-
-  return (
-    <section className="programme-section" id="programme" aria-labelledby="programme-title">
-      <div className="programme-heading">
-        <div><SectionLabel light>Programme snapshot</SectionLabel><h2 className="display-heading light-heading" id="programme-title">GAMBIA<br /><em>2027.</em></h2></div>
-        <div className="programme-context"><span className="provisional-stamp">PROVISIONAL / SUBJECT TO CONFIRMATION</span><p>Three signature experiences. One continental celebration.</p><p className="programme-small">The current site positions Gambia as the host for 2027; all programme elements remain provisional until confirmed.</p></div>
-      </div>
-
-      <div className="programme-accordion" aria-label="Programme snapshot accordion">
-        {programmeSnapshots.map((snapshot) => {
-          const isOpen = openGroup === snapshot.title;
-          return (
-            <div className={`programme-accordion-item programme-${snapshot.tone} ${isOpen ? 'is-open' : ''}`} key={snapshot.title}>
-              <button
-                type="button"
-                className="programme-accordion-trigger"
-                aria-expanded={isOpen}
-                onClick={() => setOpenGroup(isOpen ? '' : snapshot.title)}
-              >
-                <span>{snapshot.title}</span>
-                <span className="programme-accordion-toggle" aria-hidden="true">{isOpen ? '−' : '+'}</span>
-              </button>
-
-              {isOpen && (
-                <div className="programme-accordion-panel">
-                  <div className="programme-feature">
-                    <img src={snapshot.image} alt={snapshot.alt} loading="lazy" />
-                    <div className="programme-feature-copy">
-                      <p className="programme-feature-label">Experience focus</p>
-                      <p>{snapshot.summary}</p>
-                    </div>
-                  </div>
-
-                  <div className="programme-detail-list">
-                    {snapshot.items.map((item) => (
-                      <article className="programme-detail" key={item.title}>
-                        <img src={item.image} alt={item.alt} loading="lazy" />
-                        <div className="programme-detail-copy">
-                          <h3>{item.title}</h3>
-                          <p>{item.description}</p>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      <a className="text-link text-link-light programme-contact-link" href="#contact" onClick={() => requestCategory('programme')} data-testid="link-programme-enquiry">Ask about the programme <ArrowUpRight size={16} /></a>
-    </section>
-  );
-}
-
 export function ContactSection() {
   return (
     <section className="contact-section" id="contact" aria-labelledby="contact-title">
@@ -126,10 +65,10 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-main">
-        <div className="footer-brand-block"><a className="brand-link brand-link-footer" href="#home" aria-label="ACFTA Fest home" data-testid="link-footer-home"><img src="/images/acfta-fest-logo.png" alt="ACFTA Fest" /></a><p>A Pan-African festival bringing trade, talent and culture into one conversation.</p><div className="footer-theme">ONE AFRICA.<br /><em>ONE MARKET.</em><br />ONE FUTURE.</div></div>
-        <div className="footer-column"><span>EXPLORE</span><a href="#about" data-testid="link-footer-about">About us</a><a href="#event" data-testid="link-footer-event">The event</a><a href="#speakers" data-testid="link-footer-speakers">Featured speakers</a><a href="#programme" data-testid="link-footer-programme">Programme snapshot</a></div>
-        <div className="footer-column"><span>TAKE PART</span><a href={registrationUrl} data-testid="link-footer-register">Register <ArrowUpRight size={12} /></a><a href={ticketUrl} data-testid="link-footer-ticket">Get a ticket <ArrowUpRight size={12} /></a><a href={standUrl} data-testid="link-footer-stand">Buy a stand <ArrowUpRight size={12} /></a><a href={partnerUrl} data-testid="link-footer-partner">Become a partner <ArrowUpRight size={12} /></a><a href={sponsorUrl} target="_blank" rel="noreferrer" data-testid="link-footer-sponsor">Become a sponsor <ArrowUpRight size={12} /></a></div>
-        <div className="footer-column footer-contact"><span>GET IN TOUCH</span><a href="mailto:info@acftafest.com" onClick={(event) => { event.preventDefault(); window.location.href = 'mailto:info@acftafest.com'; }} data-testid="link-footer-email">info@acftafest.com</a><a href="tel:+2348063445195" data-testid="link-footer-phone">+234 806 344 5195</a><a href="#contact" data-testid="link-footer-contact">Send an enquiry <ArrowUpRight size={12} /></a></div>
+        <div className="footer-brand-block"><Link className="brand-link brand-link-footer" href="/" aria-label="ACFTA Fest home" data-testid="link-footer-home"><img src="/images/acfta-fest-logo.png" alt="ACFTA Fest" /></Link><p>A Pan-African festival bringing trade, talent and culture into one conversation.</p><div className="footer-theme">ONE AFRICA.<br /><em>ONE MARKET.</em><br />ONE FUTURE.</div></div>
+        <div className="footer-column"><span>EXPLORE</span><Link href={aboutUrl} data-testid="link-footer-about">About us</Link><a href="/#event" data-testid="link-footer-event">The event</a><a href="/#speakers" data-testid="link-footer-speakers">Featured speakers</a><Link href="/about#pillars" data-testid="link-footer-programme">Programme snapshot</Link></div>
+        <div className="footer-column"><span>TAKE PART</span><Link href={registrationUrl} data-testid="link-footer-register">Register <ArrowUpRight size={12} /></Link><Link href={ticketUrl} data-testid="link-footer-ticket">Get a ticket <ArrowUpRight size={12} /></Link><Link href={standUrl} data-testid="link-footer-stand">Buy a stand <ArrowUpRight size={12} /></Link><Link href={partnerUrl} data-testid="link-footer-partner">Become a partner <ArrowUpRight size={12} /></Link><Link href={sponsorUrl} data-testid="link-footer-sponsor">Become a sponsor <ArrowUpRight size={12} /></Link></div>
+        <div className="footer-column footer-contact"><span>GET IN TOUCH</span><a href="mailto:info@acftafest.com" onClick={(event) => { event.preventDefault(); window.location.href = 'mailto:info@acftafest.com'; }} data-testid="link-footer-email">info@acftafest.com</a><a href="tel:+2348063445195" data-testid="link-footer-phone">+234 806 344 5195</a><a href="/#contact" data-testid="link-footer-contact">Send an enquiry <ArrowUpRight size={12} /></a></div>
         <div className="footer-column footer-social"><span>FOLLOW THE FESTIVAL</span><a href="https://www.facebook.com/acftafest" target="_blank" rel="noreferrer" data-testid="link-footer-facebook">Facebook <ArrowUpRight size={12} /></a><a href="https://www.instagram.com/acftafest/reels" target="_blank" rel="noreferrer" data-testid="link-footer-instagram">Instagram <ArrowUpRight size={12} /></a></div>
       </div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} ACFTA Fest. All rights reserved.</span><span>Published theme and edition details remain subject to confirmation.</span><a href="#home" data-testid="link-back-to-top">Back to top <ArrowUpRight size={13} /></a></div>

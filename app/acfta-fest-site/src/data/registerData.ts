@@ -2,6 +2,8 @@ export type StreamKey = 'delegate' | 'vendor' | 'volunteer' | 'attendee';
 
 export interface RegistrationStream {
   key: StreamKey;
+  slug: string;
+  routePath: string;
   number: string;
   badge: string;
   title: string;
@@ -18,6 +20,8 @@ export interface RegistrationStream {
 export const REGISTRATION_STREAMS: RegistrationStream[] = [
   {
     key: 'delegate',
+    slug: 'high-level-deal-making',
+    routePath: '/register/high-level-deal-making',
     number: '01',
     badge: 'EXECUTIVE & INVESTMENT',
     title: 'Delegates & Institutional Investors',
@@ -41,6 +45,8 @@ export const REGISTRATION_STREAMS: RegistrationStream[] = [
   },
   {
     key: 'vendor',
+    slug: 'vendors-and-traders',
+    routePath: '/register/vendors-and-traders',
     number: '02',
     badge: 'EXHIBITOR & COMMERCE',
     title: 'Vendors & Pan-African Traders',
@@ -64,6 +70,8 @@ export const REGISTRATION_STREAMS: RegistrationStream[] = [
   },
   {
     key: 'volunteer',
+    slug: 'volunteers-and-crew',
+    routePath: '/register/volunteers-and-crew',
     number: '03',
     badge: 'YOUTH & LOGISTICS CREW',
     title: 'Volunteers & Operations Crew',
@@ -87,6 +95,8 @@ export const REGISTRATION_STREAMS: RegistrationStream[] = [
   },
   {
     key: 'attendee',
+    slug: 'general-attendees',
+    routePath: '/register/general-attendees',
     number: '04',
     badge: 'CULTURE & SPORTS ENTHUSIAST',
     title: 'General Attendees & Observers',
@@ -109,3 +119,10 @@ export const REGISTRATION_STREAMS: RegistrationStream[] = [
     ctaText: 'Register as Attendee',
   },
 ];
+
+export function getStreamBySlug(slugOrKey: string): RegistrationStream | undefined {
+  const normalized = slugOrKey.trim().toLowerCase();
+  return REGISTRATION_STREAMS.find(
+    (s) => s.slug === normalized || s.key === normalized,
+  );
+}

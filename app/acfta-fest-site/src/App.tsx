@@ -4,8 +4,10 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import LandingPage from '@/pages/LandingPage';
+import AboutPage from '@/pages/AboutPage';
 import PartnershipPage from '@/pages/PartnershipPage';
 import RegisterPage from '@/pages/RegisterPage';
+import RegisterPathwayPage from '@/pages/RegisterPathwayPage';
 import TicketPage from '@/pages/TicketPage';
 import BuyStandPage from '@/pages/BuyStandPage';
 import NotFound from '@/pages/not-found';
@@ -20,12 +22,12 @@ const queryClient = new QueryClient();
 
 function Router() {
   return (
-    // Keep a shared shell (sidebar, navbar) outside the boundary so it
-    // survives a page crash.
     <RoutedErrorBoundary>
       <Switch>
         <Route path="/" component={LandingPage} />
+        <Route path="/about" component={AboutPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/register/:pathwaySlug" component={RegisterPathwayPage} />
         <Route path="/partnership" component={PartnershipPage} />
         <Route path="/tickets" component={TicketPage} />
         <Route path="/buy-a-stand" component={BuyStandPage} />
