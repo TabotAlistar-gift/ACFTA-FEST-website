@@ -2,6 +2,8 @@
 .snav-header {
   position: sticky;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 120;
   width: 100%;
   background: rgba(6, 35, 25, 0.96);
@@ -9,11 +11,25 @@
   border-bottom: 1px solid rgba(236, 218, 98, 0.22);
   font-family: var(--app-font-sans, system-ui, -apple-system, sans-serif);
   box-sizing: border-box;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
+/* Homepage Hero Overlay: pinned directly to the absolute top of the page */
 .snav-header.snav-overlay {
-  position: relative;
-  background: rgba(6, 35, 25, 0.72);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  border-bottom: 1px solid rgba(242, 237, 223, 0.18);
+}
+
+.snav-header.snav-overlay.is-menu-open,
+.snav-header.snav-overlay.is-scrolled {
+  position: fixed;
+  background: rgba(6, 35, 25, 0.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(236, 218, 98, 0.22);
 }
 
 .snav-inner {

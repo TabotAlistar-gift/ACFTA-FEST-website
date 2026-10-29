@@ -29,11 +29,22 @@ interface SiteNavigationProps {
 export function SiteNavigation({ overlay = false }: SiteNavigationProps) {
   const [location, navigate] = useLocation();
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const toggleBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    if (!overlay) return;
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [overlay]);
 
   useEffect(() => {
     if (!open) return;
@@ -90,7 +101,11 @@ export function SiteNavigation({ overlay = false }: SiteNavigationProps) {
         aria-hidden="true"
         onClick={() => setOpen(false)}
       />
-      <header className={`snav-header ${overlay ? 'snav-overlay' : ''}`}>
+      <header
+        className={`snav-header ${overlay ? 'snav-overlay' : ''} ${
+          open ? 'is-menu-open' : ''
+        } ${isScrolled ? 'is-scrolled' : ''}`}
+      >
         <div className="snav-inner">
           <Link
             href="/"
