@@ -13,6 +13,7 @@ import {
   type DetailsForm,
   formatPrice,
 } from '@/components/checkout/types';
+import { sendFestivalEmail } from '@/lib/emailDispatch';
 import './checkout.css';
 
 export type { CheckoutTicket };
@@ -77,21 +78,18 @@ export default function CheckoutModal({ ticket, onClose }: CheckoutModalProps) {
     const total = subtotal + Math.round(subtotal * 0.015);
     const formattedTotal = formatPrice(total, ticket.currency);
 
-    // Silently dispatch confirmation email in background without any on-screen email status notice
-    fetch(`https://formsubmit.co/ajax/${encodeURIComponent(form.email)}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        _subject: `ACFTA Fest — Booking Confirmed: ${ticket.title}`,
-        _template: 'table',
-        Sender: 'ACFTA Fest',
-        Attendee: `${form.firstName} ${form.lastName}`,
-        Item: ticket.title,
-        Quantity: String(form.qty),
-        Amount_Paid: formattedTotal,
-        Event_Date: ticket.date,
-      }),
-    }).catch(() => null);
+    // Silently dispatch confirmation email via ACFTA Fest proxy (never exposing localhost)
+    void sendFestivalEmail(form.email, {
+      _subject: `ACFTA Fest — Booking Confirmed: ${ticket.title}`,
+      Festival: 'ACFTA Fest — Banjul, The Gambia',
+      Attendee: `${form.firstName} ${form.lastName}`.trim(),
+      Pass_or_Package: ticket.title,
+      Quantity: String(form.qty),
+      Amount_Paid: formattedTotal,
+      Event_Date: ticket.date,
+      Venue: ticket.location,
+      Status: 'Confirmed',
+    });
 
     setTimeout(() => {
       setIsSubmitting(false);

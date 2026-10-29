@@ -1,14 +1,16 @@
+import './landing.css';
+import './register.css';
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowUpRight, Crown, Menu, X } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Link, useRoute } from 'wouter';
 import { getStreamBySlug } from '@/data/registerData';
 import { RegisterPortal, type RegisterFormData } from '@/components/register/RegisterPortal';
 import { RegisterSuccess } from '@/components/register/RegisterSuccess';
-import './register.css';
+import { SiteNavigation } from '@/components/layout/SiteNavigation';
+import { Footer } from '@/components/landing/LandingBottomSections';
 
 export default function RegisterPathwayPage() {
   const [, params] = useRoute<{ pathwaySlug: string }>('/register/:pathwaySlug');
-  const [menuOpen, setMenuOpen] = useState(false);
   const [submittedData, setSubmittedData] = useState<RegisterFormData | null>(null);
 
   const activeStream = params?.pathwaySlug ? getStreamBySlug(params.pathwaySlug) : undefined;
@@ -19,64 +21,7 @@ export default function RegisterPathwayPage() {
 
   return (
     <div className="reg-page-shell">
-      {/* ── Top Bar with Hamburger Menu ── */}
-      <header className="reg-topbar">
-        <div className="reg-topbar-inner">
-          <Link href="/" className="reg-brand" aria-label="ACFTA Fest Home">
-            <img src="/images/acfta-fest-logo.png" alt="ACFTA Fest" />
-          </Link>
-
-          <button
-            type="button"
-            className="reg-hamburger-btn"
-            aria-expanded={menuOpen}
-            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            onClick={() => setMenuOpen((prev) => !prev)}
-          >
-            <span>Menu</span>
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-
-        {/* Hamburger Navigation Drawer */}
-        <div className={`reg-hamburger-drawer ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
-          <nav className="reg-drawer-nav" aria-label="Register page navigation">
-            <Link href="/" onClick={() => setMenuOpen(false)}>
-              <span className="reg-drawer-idx">01</span>
-              <span>Festival Home</span>
-              <ArrowUpRight size={16} />
-            </Link>
-            <Link href="/about" onClick={() => setMenuOpen(false)}>
-              <span className="reg-drawer-idx">02</span>
-              <span>About Us</span>
-              <ArrowUpRight size={16} />
-            </Link>
-            <Link href="/register" onClick={() => setMenuOpen(false)}>
-              <span className="reg-drawer-idx">03</span>
-              <span>Participation Pathways</span>
-              <ArrowUpRight size={16} />
-            </Link>
-            <Link href="/tickets" onClick={() => setMenuOpen(false)}>
-              <span className="reg-drawer-idx">04</span>
-              <span>Tickets</span>
-              <ArrowUpRight size={16} />
-            </Link>
-            <Link href="/partnership" onClick={() => setMenuOpen(false)}>
-              <span className="reg-drawer-idx">05</span>
-              <span>Partnerships</span>
-              <ArrowUpRight size={16} />
-            </Link>
-            <Link
-              href="/tickets"
-              className="reg-drawer-cta"
-              onClick={() => setMenuOpen(false)}
-            >
-              <span>Get Tickets</span>
-              <Crown size={15} />
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <SiteNavigation />
 
       <main>
         {!activeStream ? (
@@ -115,19 +60,7 @@ export default function RegisterPathwayPage() {
         )}
       </main>
 
-      {/* ── Minimal Footer ── */}
-      <footer className="reg-footer">
-        <div className="reg-footer-inner">
-          <Link href="/" className="reg-footer-logo">
-            <img src="/images/acfta-fest-logo.png" alt="ACFTA Fest" />
-          </Link>
-          <p className="reg-footer-motto">One Africa · One Market · One Future · Banjul 2026</p>
-          <a href="mailto:registration@acftafest.com" className="reg-footer-email">
-            <span>registration@acftafest.com</span>
-            <ArrowUpRight size={14} />
-          </a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

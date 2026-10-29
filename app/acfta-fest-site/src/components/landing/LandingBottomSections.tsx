@@ -6,8 +6,8 @@ import { speakers } from '@/data/festival';
 const ticketUrl = '/tickets';
 const registrationUrl = '/register';
 const standUrl = '/buy-a-stand';
-const sponsorUrl = '/not-found';
 const partnerUrl = '/partnership';
+const missAcftaUrl = '/miss-acfta-fest';
 const aboutUrl = '/about';
 
 function SectionLabel({ number, children, light = false }: { number?: string; children: string; light?: boolean }) {
@@ -66,12 +66,12 @@ export function Footer() {
     <footer className="site-footer">
       <div className="footer-main">
         <div className="footer-brand-block"><Link className="brand-link brand-link-footer" href="/" aria-label="ACFTA Fest home" data-testid="link-footer-home"><img src="/images/acfta-fest-logo.png" alt="ACFTA Fest" /></Link><p>A Pan-African festival bringing trade, talent and culture into one conversation.</p><div className="footer-theme">ONE AFRICA.<br /><em>ONE MARKET.</em><br />ONE FUTURE.</div></div>
-        <div className="footer-column"><span>EXPLORE</span><Link href={aboutUrl} data-testid="link-footer-about">About us</Link><a href="/#event" data-testid="link-footer-event">The event</a><a href="/#speakers" data-testid="link-footer-speakers">Featured speakers</a><Link href="/about#pillars" data-testid="link-footer-programme">Programme snapshot</Link></div>
-        <div className="footer-column"><span>TAKE PART</span><Link href={registrationUrl} data-testid="link-footer-register">Register <ArrowUpRight size={12} /></Link><Link href={ticketUrl} data-testid="link-footer-ticket">Get a ticket <ArrowUpRight size={12} /></Link><Link href={standUrl} data-testid="link-footer-stand">Buy a stand <ArrowUpRight size={12} /></Link><Link href={partnerUrl} data-testid="link-footer-partner">Become a partner <ArrowUpRight size={12} /></Link><Link href={sponsorUrl} data-testid="link-footer-sponsor">Become a sponsor <ArrowUpRight size={12} /></Link></div>
+        <div className="footer-column"><span>EXPLORE</span><Link href={aboutUrl} data-testid="link-footer-about">About us</Link><a href="/#event" data-testid="link-footer-event">The event</a><a href="/#speakers" data-testid="link-footer-speakers">Featured speakers</a><Link href="/about#pillars" data-testid="link-footer-programme">Programme snapshot</Link><Link href={missAcftaUrl} data-testid="link-footer-miss-acfta">Miss ACFTA Fest</Link></div>
+        <div className="footer-column"><span>TAKE PART</span><Link href={registrationUrl} data-testid="link-footer-register">Register <ArrowUpRight size={12} /></Link><Link href={ticketUrl} data-testid="link-footer-ticket">Get a ticket <ArrowUpRight size={12} /></Link><Link href={standUrl} data-testid="link-footer-stand">Buy a stand <ArrowUpRight size={12} /></Link><Link href={partnerUrl} data-testid="link-footer-partner">Partner with us <ArrowUpRight size={12} /></Link></div>
         <div className="footer-column footer-contact"><span>GET IN TOUCH</span><a href="mailto:info@acftafest.com" onClick={(event) => { event.preventDefault(); window.location.href = 'mailto:info@acftafest.com'; }} data-testid="link-footer-email">info@acftafest.com</a><a href="tel:+2348063445195" data-testid="link-footer-phone">+234 806 344 5195</a><a href="/#contact" data-testid="link-footer-contact">Send an enquiry <ArrowUpRight size={12} /></a></div>
         <div className="footer-column footer-social"><span>FOLLOW THE FESTIVAL</span><a href="https://www.facebook.com/acftafest" target="_blank" rel="noreferrer" data-testid="link-footer-facebook">Facebook <ArrowUpRight size={12} /></a><a href="https://www.instagram.com/acftafest/reels" target="_blank" rel="noreferrer" data-testid="link-footer-instagram">Instagram <ArrowUpRight size={12} /></a></div>
       </div>
-      <div className="footer-bottom"><span>© {new Date().getFullYear()} ACFTA Fest. All rights reserved.</span><span>Published theme and edition details remain subject to confirmation.</span><a href="#home" data-testid="link-back-to-top">Back to top <ArrowUpRight size={13} /></a></div>
+      <div className="footer-bottom"><span>© {new Date().getFullYear()} ACFTA Fest. All rights reserved.</span><span>Published theme and edition details remain subject to confirmation.</span><a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} data-testid="link-back-to-top">Back to top <ArrowUpRight size={13} /></a></div>
       <div className="footer-endline">ONE AFRICA. ONE MARKET. ONE FUTURE.</div>
     </footer>
   );

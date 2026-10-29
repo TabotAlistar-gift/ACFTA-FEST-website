@@ -22,9 +22,8 @@ export function RegisterTracks() {
               Choose How You Shape <em>ACFTA Fest.</em>
             </h2>
             <p className="reg-tracks-lead">
-              Explore the four accredited festival pathways below. Select{' '}
-              <strong>Continue with This Stream</strong> on your chosen category to open its
-              dedicated registration page.
+              Explore the four accredited festival pathways below and select your category to open
+              its dedicated registration page.
             </p>
           </div>
         </div>
@@ -113,8 +112,8 @@ export function RegisterTracks() {
                         className="reg-track-btn"
                         data-testid={`button-pathway-${stream.key}`}
                       >
-                        <span>Continue with This Stream · {stream.ctaText}</span>
-                        <ArrowRight size={15} />
+                        <span>{stream.ctaText}</span>
+                        <ArrowRight size={17} />
                       </Link>
                     </div>
                   </motion.div>

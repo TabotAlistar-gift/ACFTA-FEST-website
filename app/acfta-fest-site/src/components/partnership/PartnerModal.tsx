@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Building2, Check, ChevronDown, Mail, Phone, Send, User, X } from 'lucide-react';
 import { type PartnerTrack, type SponsorTier } from '@/data/partnershipData';
+import { sendFestivalEmail } from '@/lib/emailDispatch';
 
 interface PartnerModalProps {
   isOpen: boolean;
@@ -40,13 +41,22 @@ export function PartnerModal({ isOpen, initialTrack, initialTier, onClose }: Par
     return () => window.removeEventListener('keydown', onKey);
   }, [isOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSent(true);
-    }, 1500);
+    await sendFestivalEmail(email, {
+      _subject: 'Your ACFTA Fest Partnership Expression of Interest',
+      Organization: orgName,
+      Representative: repName,
+      Email: email,
+      Phone: phone,
+      Partnership_Track: category,
+      Sponsorship_Tier: tier || 'To be discussed with Secretariat',
+      Proposal_Notes: message || 'Standard Partnership Inquiry',
+      Support_Desk: 'partnerships@acftafest.com | info@acftafest.com',
+    });
+    setIsSubmitting(false);
+    setIsSent(true);
   };
 
   const resetAndClose = () => {

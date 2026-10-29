@@ -10,6 +10,7 @@ import RegisterPage from '@/pages/RegisterPage';
 import RegisterPathwayPage from '@/pages/RegisterPathwayPage';
 import TicketPage from '@/pages/TicketPage';
 import BuyStandPage from '@/pages/BuyStandPage';
+import MissAcftaPage from '@/pages/MissAcftaPage';
 import NotFound from '@/pages/not-found';
 import {
   Route,
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/partnership" component={PartnershipPage} />
         <Route path="/tickets" component={TicketPage} />
         <Route path="/buy-a-stand" component={BuyStandPage} />
+        <Route path="/miss-acfta-fest" component={MissAcftaPage} />
         <Route path="/not-found" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

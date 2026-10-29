@@ -1,0 +1,311 @@
+/* ── Unified Site Navigation (Shared Across All Public Pages) ── */
+.snav-header {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  width: 100%;
+  background: rgba(6, 35, 25, 0.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(236, 218, 98, 0.22);
+  font-family: var(--app-font-sans, system-ui, -apple-system, sans-serif);
+  box-sizing: border-box;
+}
+
+.snav-header.snav-overlay {
+  position: relative;
+  background: rgba(6, 35, 25, 0.72);
+}
+
+.snav-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .snav-inner {
+    padding: 1rem 2.75rem;
+  }
+}
+
+.snav-brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.snav-brand img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .snav-brand img {
+    height: 44px;
+  }
+}
+
+/* Desktop Horizontal Links */
+.snav-desktop {
+  display: none;
+}
+
+@media (min-width: 1180px) {
+  .snav-desktop {
+    display: flex;
+    align-items: center;
+    gap: 1.35rem;
+  }
+}
+
+.snav-desktop-link {
+  position: relative;
+  color: rgba(252, 251, 248, 0.86);
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.snav-desktop-link:hover,
+.snav-desktop-link.is-active {
+  color: #ECDA62;
+}
+
+.snav-desktop-link.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: #ECDA62;
+  border-radius: 2px;
+}
+
+.snav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.snav-ticket-cta {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .snav-ticket-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.52rem 1rem;
+    border-radius: 9999px;
+    background: #ECDA62;
+    color: #062319;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .snav-ticket-cta:hover {
+    background: #fae878;
+    transform: translateY(-1px);
+  }
+}
+
+/* Hamburger Menu Trigger Button (Homepage & Register Approved Style) */
+.snav-hamburger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 9999px;
+  background: rgba(18, 61, 45, 0.82);
+  border: 1px solid rgba(236, 218, 98, 0.45);
+  color: #fcfbf8;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.snav-hamburger-btn:hover,
+.snav-hamburger-btn[aria-expanded="true"] {
+  background: #ECDA62;
+  color: #062319;
+  border-color: #ECDA62;
+}
+
+.snav-hamburger-btn:focus-visible {
+  outline: 2px solid #ECDA62;
+  outline-offset: 2px;
+}
+
+/* Backdrop Overlay */
+.snav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 115;
+  background: rgba(3, 18, 12, 0.62);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.snav-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Numbered Editorial Hamburger Drawer */
+.snav-drawer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 125;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #041912;
+  border-bottom: 1px solid rgba(236, 218, 98, 0.28);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
+  transition: max-height 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.snav-drawer.is-open {
+  max-height: calc(100vh - 64px);
+  opacity: 1;
+  visibility: visible;
+}
+
+.snav-drawer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .snav-drawer-inner {
+    padding: 1rem 3rem 2rem;
+  }
+}
+
+.snav-drawer-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .snav-drawer-nav {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+  }
+}
+
+.snav-drawer-link {
+  display: grid;
+  grid-template-columns: 38px 1fr 20px;
+  align-items: center;
+  padding: 0.82rem 0.25rem;
+  border-bottom: 1px solid rgba(252, 251, 248, 0.12);
+  color: #fcfbf8;
+  text-decoration: none;
+  font-family: var(--app-font-serif, Georgia, serif);
+  font-size: 1.12rem;
+  transition: color 0.2s ease, padding-left 0.2s ease, background-color 0.2s ease;
+}
+
+.snav-drawer-link:hover,
+.snav-drawer-link.is-active {
+  color: #ECDA62;
+  padding-left: 0.55rem;
+}
+
+.snav-drawer-idx {
+  font-family: var(--app-font-sans, system-ui, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ECDA62;
+  letter-spacing: 0.1em;
+}
+
+.snav-drawer-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.snav-active-pill {
+  font-family: var(--app-font-sans, system-ui, sans-serif);
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.48rem;
+  border-radius: 9999px;
+  background: rgba(236, 218, 98, 0.18);
+  border: 1px solid rgba(236, 218, 98, 0.45);
+  color: #ECDA62;
+}
+
+.snav-drawer-footer {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.snav-drawer-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.72rem 1.45rem;
+  border-radius: 9999px;
+  background: #ECDA62;
+  color: #062319;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.snav-drawer-cta:hover {
+  background: #fae878;
+}
+
+.snav-drawer-motto {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(252, 251, 248, 0.68);
+}

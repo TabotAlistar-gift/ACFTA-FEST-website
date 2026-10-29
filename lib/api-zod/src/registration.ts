@@ -32,6 +32,7 @@ export const STREAM_OPTIONS_MAP: Record<RegistrationStreamKey, readonly string[]
 
 export const CreateRegistrationBody = zod
   .object({
+    registrationId: zod.string().trim().max(48).optional(),
     streamKey: zod.enum(STREAM_KEYS),
     fullName: zod
       .string()
@@ -122,4 +123,5 @@ export const CreateRegistrationResponse = zod.object({
   streamKey: zod.enum(STREAM_KEYS),
   receivedAt: zod.coerce.date(),
   message: zod.string(),
+  emailDispatched: zod.boolean().optional(),
 });

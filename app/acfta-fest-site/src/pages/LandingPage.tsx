@@ -1,10 +1,11 @@
 import './landing.css';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'wouter';
 import {
-  ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, Menu, X,
+  ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight,
 } from 'lucide-react';
 import { pillars } from '@/data/festival';
+import { SiteNavigation } from '@/components/layout/SiteNavigation';
 import {
   ContactSection,
   Footer,
@@ -14,69 +15,12 @@ import {
 const ticketUrl = '/tickets';
 const registrationUrl = '/register';
 const standUrl = '/buy-a-stand';
-const sponsorUrl = '/not-found';
+const sponsorUrl = '/partnership';
 const partnerUrl = '/partnership';
-const aboutUrl = '/about';
-
-const navItems = [
-  ['Home', '#home'],
-  ['About Us', aboutUrl],
-  ['The Event', '#event'],
-  ['Partnerships & Registration', '#participate'],
-  ['Contact', '#contact'],
-];
+const missAcftaUrl = '/miss-acfta-fest';
 
 function requestCategory(category: string) {
   window.dispatchEvent(new CustomEvent('acfta:enquiry', { detail: category }));
-}
-
-function Wordmark({ footer = false }: { footer?: boolean }) {
-  return (
-    <a className={`brand-link${footer ? ' brand-link-footer' : ''}`} href="#home" aria-label="ACFTA Fest home" data-testid={footer ? 'link-footer-home' : 'link-brand-home'}>
-      <img src="/images/acfta-fest-logo.png" alt="ACFTA Fest" />
-    </a>
-  );
-}
-
-function Navigation() {
-  const [open, setOpen] = useState(false);
-  return (
-    <header className="site-header">
-      <div className="header-inner">
-        <Wordmark />
-        <nav className="desktop-nav" aria-label="Main navigation">
-          {navItems.map(([label, href]) => (
-            href.startsWith('/') ? (
-              <Link key={href} href={href} data-testid={`link-nav-${label.toLowerCase().replaceAll(' ', '-')}`}>{label}</Link>
-            ) : (
-              <a key={href} href={href} data-testid={`link-nav-${label.toLowerCase().replaceAll(' ', '-')}`}>{label}</a>
-            )
-          ))}
-          <Link className="nav-ticket" href={ticketUrl} data-testid="link-nav-get-a-ticket">Get a Ticket <ArrowUpRight size={14} /></Link>
-        </nav>
-        <button className="menu-toggle" type="button" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? 'Close navigation menu' : 'Open navigation menu'} onClick={() => setOpen(!open)} data-testid="button-mobile-menu">
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-      <div className={`mobile-nav${open ? ' is-open' : ''}`} id="mobile-navigation" aria-hidden={!open}>
-        <nav aria-label="Mobile navigation">
-          {navItems.map(([label, href], index) => (
-            href.startsWith('/') ? (
-              <Link key={href} href={href} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} data-testid={`link-mobile-${index}`}>
-                <span className="mobile-index">0{index + 1}</span>{label}<ArrowUpRight size={16} />
-              </Link>
-            ) : (
-              <a key={href} href={href} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} data-testid={`link-mobile-${index}`}>
-                <span className="mobile-index">0{index + 1}</span>{label}<ArrowUpRight size={16} />
-              </a>
-            )
-          ))}
-          <Link className="mobile-ticket" href={ticketUrl} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} data-testid="link-mobile-ticket">Get a Ticket <ArrowUpRight size={16} /></Link>
-        </nav>
-        <p>One Africa. One market. One future.</p>
-      </div>
-    </header>
-  );
 }
 
 function Hero() {
@@ -84,7 +28,7 @@ function Hero() {
     <section className="hero site-grain" id="home" aria-labelledby="hero-title">
       <div className="hero-image" role="img" aria-label="Festival dancers in vivid red and gold costumes celebrating together" />
       <div className="hero-shade" />
-      <Navigation />
+      <SiteNavigation overlay />
       <div className="hero-content">
         <div className="hero-edition reveal" aria-label="ACFTA Fest Gambia 2027">
           <span className="edition-dot" aria-hidden="true" />
@@ -190,6 +134,7 @@ function ParticipateSection() {
     { label: 'Book an exhibition stand', detail: 'Bring your work to the floor', href: standUrl, internal: true },
     { label: 'Become a sponsor', detail: 'Explore sponsorship enquiries', href: sponsorUrl, internal: true },
     { label: 'Become a partner', detail: 'Explore partnership enquiries', href: partnerUrl, internal: true },
+    { label: 'Miss ACFTA Fest', detail: 'Celebrate African women, leadership & culture', href: missAcftaUrl, internal: true },
     { label: 'Join the programme', detail: 'Ask about programme participation', href: '#contact', category: 'programme' },
   ];
   return (
